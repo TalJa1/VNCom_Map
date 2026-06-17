@@ -1,0 +1,88 @@
+.ppanel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px 26px 28px;
+  box-shadow: 0 12px 32px rgba(16, 80, 40, 0.12);
+  border: 1px solid #e2f2e2;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ppanel--empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #4d7a59;
+}
+.ppanel__emptyicon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.ppanel--empty h3 {
+  color: #14532d;
+  margin: 0 0 8px;
+}
+.ppanel--empty p {
+  margin: 0;
+  font-size: 0.92rem;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.ppanel__region {
+  align-self: flex-start;
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.ppanel__name {
+  margin: 12px 0 4px;
+  font-size: 1.7rem;
+  color: #0f5132;
+}
+
+.ppanel__label {
+  margin: 10px 0 8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #2e8b57;
+  font-weight: 700;
+}
+
+.ppanel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.ppanel__chip {
+  background: #e6f7e6;
+  color: #14532d;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ppanel__cta {
+  margin-top: auto;
+  align-self: flex-start;
+  border: none;
+  background: #2e8b57;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.ppanel__cta:hover { background: #14532d; }
+.ppanel__cta:active { transform: scale(0.97); }

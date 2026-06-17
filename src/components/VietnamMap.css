@@ -1,0 +1,134 @@
+.vnmap-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.vnmap-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 30px rgba(16, 80, 40, 0.18));
+}
+
+.vnmap-province {
+  stroke: #ffffff;
+  stroke-width: 6;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  outline: none;
+}
+
+.vnmap-province:hover,
+.vnmap-province:focus-visible {
+  filter: brightness(1.08) saturate(1.1);
+  transform: scale(1.012);
+}
+
+.vnmap-province.is-selected {
+  stroke: #0f5132;
+  stroke-width: 14;
+  filter: brightness(1.05) drop-shadow(0 0 10px rgba(15, 81, 50, 0.5));
+}
+
+.vnmap-sea {
+  fill: #1b6e7a;
+  font-size: 190px;
+  font-weight: 700;
+  font-style: italic;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+.vnmap-tooltip {
+  position: absolute;
+  z-index: 20;
+  min-width: 200px;
+  max-width: 240px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #b6e3b6;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 14px 36px rgba(16, 80, 40, 0.22);
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  animation: vnmap-pop 0.12s ease;
+}
+
+@keyframes vnmap-pop {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vnmap-tooltip__name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #0f5132;
+}
+
+.vnmap-tooltip__region {
+  font-size: 0.78rem;
+  color: #4d7a59;
+  margin-bottom: 8px;
+}
+
+.vnmap-tooltip__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #2e8b57;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.vnmap-tooltip__list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vnmap-tooltip__list li {
+  background: #e6f7e6;
+  color: #14532d;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.vnmap-tooltip__hint {
+  font-size: 0.75rem;
+  color: #2e8b57;
+  font-weight: 600;
+}
+
+.vnmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.vnmap-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #2d4a36;
+  font-weight: 600;
+}
+
+.vnmap-legend__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
