@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
 import VietnamMap from './components/VietnamMap'
-import ProvincePanel from './components/ProvincePanel'
 import Marketplace from './components/Marketplace'
 import CartDrawer, { type CartItem } from './components/CartDrawer'
 import type { Product } from './data/products'
@@ -75,10 +74,10 @@ function App() {
 
       {/* ---------- HOME / MAP ---------- */}
       <section id="home" className="hero">
-        <div className="hero__intro">
+        <div className="hero__banner">
           <span className="hero__eyebrow">Bản đồ nông sản Việt Nam</span>
           <h1 className="hero__title">
-            Mỗi vùng đất, <br />một đặc sản tự hào
+            Mỗi vùng đất, một đặc sản tự hào
           </h1>
           <p className="hero__sub">
             Rê chuột lên bản đồ để khám phá nông sản đặc trưng của 63 tỉnh thành.
@@ -95,13 +94,11 @@ function App() {
         </div>
 
         <div className="hero__map">
-          <VietnamMap onSelect={setSelectedKey} selectedKey={selectedKey} />
-          <div className="hero__panel">
-            <ProvincePanel
-              selectedKey={selectedKey}
-              onViewProducts={handleViewProducts}
-            />
-          </div>
+          <VietnamMap
+            onSelect={setSelectedKey}
+            selectedKey={selectedKey}
+            onViewProducts={handleViewProducts}
+          />
         </div>
       </section>
 

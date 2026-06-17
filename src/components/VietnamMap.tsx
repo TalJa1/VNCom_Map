@@ -1,11 +1,13 @@
 import { useState, useRef, useMemo, type MouseEvent } from 'react'
 import { vietnamMap } from '../data/vietnamMap'
 import { PROVINCES, REGIONS } from '../data/provinces'
+import { PRODUCTS } from '../data/products'
 import './VietnamMap.css'
 
 interface VietnamMapProps {
-  onSelect: (key: string) => void
+  onSelect: (key: string | null) => void
   selectedKey: string | null
+  onViewProducts: (key: string) => void
 }
 
 interface HoverState {
@@ -14,13 +16,17 @@ interface HoverState {
   y: number
 }
 
-export default function VietnamMap({ onSelect, selectedKey }: VietnamMapProps) {
+export default function VietnamMap({ onSelect, selectedKey, onViewProducts }: VietnamMapProps) {
   const [hover, setHover] = useState<HoverState | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
 
   const hovered = hover ? PROVINCES[hover.key] : undefined
+  const selected = selectedKey ? PROVINCES[selectedKey] : undefined
+  const selectedRegion = selected ? REGIONS[selected.region] : undefined
+  const selectedProductCount = selectedKey
+    ? PRODUCTS.filter((p) => p.provinceKey === selectedKey).length
+    : 0
 
-  // Regions present on the map, for the legend.
   const legend = useMemo(() => Object.values(REGIONS), [])
 
   const handleMove = (e: MouseEvent, key: string) => {
@@ -33,7 +39,7 @@ export default function VietnamMap({ onSelect, selectedKey }: VietnamMapProps) {
     <div className="vnmap-wrap" ref={wrapRef}>
       <svg
         className="vnmap-svg"
-        viewBox={`0 0 ${vietnamMap.width} ${vietnamMap.height}`}
+        viewBox={`0 0 ${vietnamMap.width * 1.55} ${vietnamMap.height}`}
         role="img"
         aria-label="Bản đồ nông sản Việt Nam"
       >
@@ -68,15 +74,31 @@ export default function VietnamMap({ onSelect, selectedKey }: VietnamMapProps) {
           )
         })}
 
-        {/* Paracel & Spratly labels — Vietnam's seas */}
-        <text className="vnmap-sea" x={vietnamMap.width * 0.72} y={vietnamMap.height * 0.26}>
-          QĐ. Hoàng Sa
-        </text>
-        <text className="vnmap-sea" x={vietnamMap.width * 0.78} y={vietnamMap.height * 0.62}>
-          QĐ. Trường Sa
-        </text>
+        {/* Hoàng Sa */}
+        <g className="vnmap-archipelago">
+          {[
+            [5700, 2500], [5850, 2600], [5950, 2450], [6050, 2700],
+            [5780, 2750], [5900, 2850], [6100, 2550], [5650, 2650],
+          ].map(([cx, cy], i) => (
+            <circle key={`hs${i}`} cx={cx} cy={cy} r={38} />
+          ))}
+          <text x={5550} y={2250}>QĐ. Hoàng Sa</text>
+        </g>
+
+        {/* Trường Sa */}
+        <g className="vnmap-archipelago">
+          {[
+            [6200, 6200], [6350, 6350], [6500, 6500], [6100, 6450],
+            [6400, 6700], [6250, 6850], [6550, 6300], [6150, 6650],
+            [6450, 6100], [6300, 6550],
+          ].map(([cx, cy], i) => (
+            <circle key={`ts${i}`} cx={cx} cy={cy} r={38} />
+          ))}
+          <text x={6050} y={5950}>QĐ. Trường Sa</text>
+        </g>
       </svg>
 
+      {/* Hover tooltip */}
       {hovered && hover && (
         <div
           className="vnmap-tooltip"
@@ -93,6 +115,30 @@ export default function VietnamMap({ onSelect, selectedKey }: VietnamMapProps) {
             ))}
           </ul>
           <div className="vnmap-tooltip__hint">Bấm để xem & đặt mua →</div>
+        </div>
+      )}
+
+      {/* Click overlay panel */}
+      {selected && selectedKey && (
+        <div className="vnmap-overlay" onClick={() => onSelect(null)}>
+          <div className="vnmap-panel" onClick={(e) => e.stopPropagation()}>
+            <button className="vnmap-panel__close" onClick={() => onSelect(null)} aria-label="Đóng">✕</button>
+            <span className="vnmap-panel__region" style={{ background: selectedRegion?.color }}>
+              {selectedRegion?.name}
+            </span>
+            <h3 className="vnmap-panel__name">{selected.name}</h3>
+            <p className="vnmap-panel__label">Nông sản đặc trưng</p>
+            <div className="vnmap-panel__chips">
+              {selected.nongsan.map((n) => (
+                <span key={n} className="vnmap-panel__chip">🌱 {n}</span>
+              ))}
+            </div>
+            <button className="vnmap-panel__cta" onClick={() => onViewProducts(selectedKey)}>
+              {selectedProductCount > 0
+                ? `Xem ${selectedProductCount} sản phẩm đang bán →`
+                : 'Xem gian hàng nông sản →'}
+            </button>
+          </div>
         </div>
       )}
 
