@@ -6,7 +6,6 @@ import type { Product } from './data/products'
 import './App.css'
 
 function App() {
-  const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [filterProvinceKey, setFilterProvinceKey] = useState<string | null>(null)
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
@@ -80,8 +79,8 @@ function App() {
             Mỗi vùng đất, một đặc sản tự hào
           </h1>
           <p className="hero__sub">
-            Rê chuột lên bản đồ để khám phá nông sản đặc trưng của 63 tỉnh thành.
-            Bấm chọn một tỉnh để xem chi tiết và đặt mua trực tiếp từ người nông dân.
+            Rê chuột lên bản đồ để khám phá nông sản đặc trưng của 63 tỉnh thành
+            và đặt mua trực tiếp từ người nông dân.
           </p>
           <div className="hero__actions">
             <button className="btn btn--primary" onClick={() => scrollTo('market')}>
@@ -95,8 +94,6 @@ function App() {
 
         <div className="hero__map">
           <VietnamMap
-            onSelect={setSelectedKey}
-            selectedKey={selectedKey}
             onViewProducts={handleViewProducts}
           />
         </div>

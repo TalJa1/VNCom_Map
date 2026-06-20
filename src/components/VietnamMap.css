@@ -28,11 +28,6 @@
   transform: scale(1.012);
 }
 
-.vnmap-province.is-selected {
-  stroke: #0f5132;
-  stroke-width: 14;
-  filter: brightness(1.05) drop-shadow(0 0 10px rgba(15, 81, 50, 0.5));
-}
 
 .vnmap-sea {
   fill: #1b6e7a;
@@ -59,15 +54,15 @@
 .vnmap-tooltip {
   position: absolute;
   z-index: 20;
-  min-width: 200px;
-  max-width: 240px;
+  min-width: 220px;
+  max-width: 280px;
   background: rgba(255, 255, 255, 0.97);
   border: 1px solid #b6e3b6;
-  border-radius: 14px;
-  padding: 12px 14px;
+  border-radius: 16px;
+  padding: 14px 16px 16px;
   box-shadow: 0 14px 36px rgba(16, 80, 40, 0.22);
-  pointer-events: none;
-  backdrop-filter: blur(4px);
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
   animation: vnmap-pop 0.12s ease;
 }
 
@@ -97,136 +92,48 @@
   margin-bottom: 4px;
 }
 
-.vnmap-tooltip__list {
-  list-style: none;
-  margin: 0 0 8px;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.vnmap-tooltip__list li {
-  background: #e6f7e6;
-  color: #14532d;
-  border-radius: 999px;
-  padding: 3px 9px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.vnmap-tooltip__hint {
-  font-size: 0.75rem;
-  color: #2e8b57;
-  font-weight: 600;
-}
-
-/* ---------- Click overlay panel ---------- */
-.vnmap-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(15, 40, 25, 0.25);
-  border-radius: 14px;
-  animation: vnmap-fade 0.15s ease;
-}
-
-@keyframes vnmap-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.vnmap-panel {
-  position: relative;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 20px;
-  padding: 26px 28px 28px;
-  box-shadow: 0 16px 40px rgba(16, 80, 40, 0.22);
-  border: 1px solid #e2f2e2;
-  max-width: 340px;
-  width: 90%;
-  backdrop-filter: blur(6px);
-  animation: vnmap-pop 0.18s ease;
-}
-
-.vnmap-panel__close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: #e6f7e6;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: #14532d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.vnmap-panel__close:hover {
-  background: #c5ecc5;
-}
-
-.vnmap-panel__region {
+.vnmap-tooltip__region-badge {
   display: inline-block;
   color: #fff;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 999px;
+  margin-bottom: 6px;
   letter-spacing: 0.02em;
 }
 
-.vnmap-panel__name {
-  margin: 10px 0 4px;
-  font-size: 1.5rem;
-  color: #0f5132;
-}
-
-.vnmap-panel__label {
-  margin: 8px 0 6px;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #2e8b57;
-  font-weight: 700;
-}
-
-.vnmap-panel__chips {
+.vnmap-tooltip__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 5px;
+  margin-bottom: 12px;
 }
 
-.vnmap-panel__chip {
+.vnmap-tooltip__chip {
   background: #e6f7e6;
   color: #14532d;
-  border-radius: 10px;
-  padding: 5px 11px;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
-.vnmap-panel__cta {
+.vnmap-tooltip__cta {
   width: 100%;
   border: none;
   background: #2e8b57;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
-.vnmap-panel__cta:hover { background: #14532d; }
-.vnmap-panel__cta:active { transform: scale(0.97); }
+.vnmap-tooltip__cta:hover { background: #14532d; }
+.vnmap-tooltip__cta:active { transform: scale(0.97); }
+
 
 .vnmap-legend {
   display: flex;

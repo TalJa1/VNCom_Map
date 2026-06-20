@@ -5,8 +5,6 @@ import { PRODUCTS } from '../data/products'
 import './VietnamMap.css'
 
 interface VietnamMapProps {
-  onSelect: (key: string | null) => void
-  selectedKey: string | null
   onViewProducts: (key: string) => void
 }
 
@@ -16,15 +14,14 @@ interface HoverState {
   y: number
 }
 
-export default function VietnamMap({ onSelect, selectedKey, onViewProducts }: VietnamMapProps) {
+export default function VietnamMap({ onViewProducts }: VietnamMapProps) {
   const [hover, setHover] = useState<HoverState | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
 
   const hovered = hover ? PROVINCES[hover.key] : undefined
-  const selected = selectedKey ? PROVINCES[selectedKey] : undefined
-  const selectedRegion = selected ? REGIONS[selected.region] : undefined
-  const selectedProductCount = selectedKey
-    ? PRODUCTS.filter((p) => p.provinceKey === selectedKey).length
+  const hoveredRegion = hovered ? REGIONS[hovered.region] : undefined
+  const hoveredProductCount = hover
+    ? PRODUCTS.filter((p) => p.provinceKey === hover.key).length
     : 0
 
   const legend = useMemo(() => Object.values(REGIONS), [])
@@ -46,28 +43,20 @@ export default function VietnamMap({ onSelect, selectedKey, onViewProducts }: Vi
         {vietnamMap.provinces.map((p) => {
           const meta = PROVINCES[p.key]
           const region = meta ? REGIONS[meta.region] : undefined
-          const isSelected = selectedKey === p.key
           const isHover = hover?.key === p.key
           return (
             <path
               key={p.key}
               d={p.d}
-              className={`vnmap-province${isSelected ? ' is-selected' : ''}`}
+              className="vnmap-province"
               fill={region?.color ?? '#9bbf9b'}
               style={{
-                opacity: isHover || isSelected ? 1 : 0.82,
+                opacity: isHover ? 1 : 0.82,
               }}
               onMouseEnter={(e) => handleMove(e, p.key)}
               onMouseMove={(e) => handleMove(e, p.key)}
               onMouseLeave={() => setHover(null)}
-              onClick={() => onSelect(p.key)}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  onSelect(p.key)
-                }
-              }}
+              onClick={() => onViewProducts(p.key)}
             >
               <title>{meta?.name ?? p.name}</title>
             </path>
@@ -98,47 +87,29 @@ export default function VietnamMap({ onSelect, selectedKey, onViewProducts }: Vi
         </g>
       </svg>
 
-      {/* Hover tooltip */}
+      {/* Hover tooltip with full info + CTA */}
       {hovered && hover && (
         <div
           className="vnmap-tooltip"
           style={{ left: hover.x + 16, top: hover.y + 12 }}
+          onMouseEnter={() => setHover(hover)}
+          onMouseLeave={() => setHover(null)}
         >
+          <span className="vnmap-tooltip__region-badge" style={{ background: hoveredRegion?.color }}>
+            {hoveredRegion?.name}
+          </span>
           <div className="vnmap-tooltip__name">{hovered.name}</div>
-          <div className="vnmap-tooltip__region">
-            {REGIONS[hovered.region]?.name}
-          </div>
-          <div className="vnmap-tooltip__label">Nông sản gợi ý</div>
-          <ul className="vnmap-tooltip__list">
-            {hovered.nongsan.slice(0, 4).map((n) => (
-              <li key={n}>{n}</li>
+          <div className="vnmap-tooltip__label">Nông sản đặc trưng</div>
+          <div className="vnmap-tooltip__chips">
+            {hovered.nongsan.map((n) => (
+              <span key={n} className="vnmap-tooltip__chip">{n}</span>
             ))}
-          </ul>
-          <div className="vnmap-tooltip__hint">Bấm để xem & đặt mua →</div>
-        </div>
-      )}
-
-      {/* Click overlay panel */}
-      {selected && selectedKey && (
-        <div className="vnmap-overlay" onClick={() => onSelect(null)}>
-          <div className="vnmap-panel" onClick={(e) => e.stopPropagation()}>
-            <button className="vnmap-panel__close" onClick={() => onSelect(null)} aria-label="Đóng">✕</button>
-            <span className="vnmap-panel__region" style={{ background: selectedRegion?.color }}>
-              {selectedRegion?.name}
-            </span>
-            <h3 className="vnmap-panel__name">{selected.name}</h3>
-            <p className="vnmap-panel__label">Nông sản đặc trưng</p>
-            <div className="vnmap-panel__chips">
-              {selected.nongsan.map((n) => (
-                <span key={n} className="vnmap-panel__chip">🌱 {n}</span>
-              ))}
-            </div>
-            <button className="vnmap-panel__cta" onClick={() => onViewProducts(selectedKey)}>
-              {selectedProductCount > 0
-                ? `Xem ${selectedProductCount} sản phẩm đang bán →`
-                : 'Xem gian hàng nông sản →'}
-            </button>
           </div>
+          <button className="vnmap-tooltip__cta" onClick={() => onViewProducts(hover.key)}>
+            {hoveredProductCount > 0
+              ? `Xem ${hoveredProductCount} sản phẩm đang bán →`
+              : 'Xem gian hàng nông sản →'}
+          </button>
         </div>
       )}
 
