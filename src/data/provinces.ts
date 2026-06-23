@@ -73,7 +73,7 @@ export const PROVINCES: Record<string, Province> = {
   'vn-bd': { key: 'vn-bd', name: 'Bình Định', region: 'namTrungBo', nongsan: ['Nem chợ Huyện', 'Bánh tráng nước dừa', 'Rượu Bàu Đá'] },
   'vn-py': { key: 'vn-py', name: 'Phú Yên', region: 'namTrungBo', nongsan: ['Cá ngừ đại dương', 'Muối Tuyết Diêm', 'Sò huyết Ô Loan'] },
   'vn-kh': { key: 'vn-kh', name: 'Khánh Hòa', region: 'namTrungBo', nongsan: ['Yến sào Khánh Hòa', 'Xoài Cam Lâm', 'Tỏi Ninh Hòa', 'Nước mắm Nha Trang'] },
-  'vn-nt': { key: 'vn-nt', name: 'Ninh Thuận', region: 'namTrungBo', nongsan: ['Nho Ninh Thuận', 'Táo Ninh Thuận', 'Tỏi Phan Rang', 'Muối Cà Ná'] },
+  'vn-nt': { key: 'vn-nt', name: 'Ninh Thuận', region: 'namTrungBo', nongsan: ['Nho Ninh Thuận', 'Táo xanh Ninh Thuận', 'Thanh long', 'Mãng cầu ta', 'Chuối', 'Xoài', 'Mủ trôm', 'Hạt đười ươi bay', 'Trái xay nhung rừng', 'Trái da đá', 'Tỏi Phan Rang', 'Măng tây xanh'] },
   'vn-bu': { key: 'vn-bu', name: 'Bình Thuận', region: 'namTrungBo', nongsan: ['Thanh long Bình Thuận', 'Nước mắm Phan Thiết', 'Mực một nắng'] },
 
   // ---- Tây Nguyên ----
