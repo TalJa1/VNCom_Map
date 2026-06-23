@@ -2,21 +2,26 @@
   position: relative;
   width: 100%;
   margin: 0 auto;
+  padding: 20px 0;
 }
 
 .vnmap-svg {
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 12px 30px rgba(16, 80, 40, 0.18));
+  filter: drop-shadow(0 8px 20px rgba(16, 80, 40, 0.12));
+  transition: filter 0.3s ease;
+}
+.vnmap-svg:hover {
+  filter: drop-shadow(0 12px 32px rgba(16, 80, 40, 0.2));
 }
 
 .vnmap-province {
-  stroke: #ffffff;
-  stroke-width: 6;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 5;
   stroke-linejoin: round;
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
   transform-box: fill-box;
   transform-origin: center;
   outline: none;
@@ -24,10 +29,11 @@
 
 .vnmap-province:hover,
 .vnmap-province:focus-visible {
-  filter: brightness(1.08) saturate(1.1);
-  transform: scale(1.012);
+  filter: brightness(1.1) saturate(1.15) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+  transform: scale(1.03);
+  stroke: #fff;
+  stroke-width: 7;
 }
-
 
 .vnmap-sea {
   fill: #1b6e7a;
@@ -39,12 +45,12 @@
 }
 
 .vnmap-archipelago circle {
-  fill: #1bacb6;
-  opacity: 0.7;
+  fill: #48c9b0;
+  opacity: 0.6;
 }
 
 .vnmap-archipelago text {
-  fill: #14626a;
+  fill: #1a7a6d;
   font-size: 200px;
   font-weight: 800;
   font-style: italic;
@@ -56,24 +62,26 @@
   z-index: 20;
   min-width: 220px;
   max-width: 280px;
-  background: rgba(255, 255, 255, 0.97);
-  border: 1px solid #b6e3b6;
-  border-radius: 16px;
-  padding: 14px 16px 16px;
-  box-shadow: 0 14px 36px rgba(16, 80, 40, 0.22);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(46, 139, 87, 0.15);
+  border-radius: 18px;
+  padding: 16px 18px 18px;
+  box-shadow:
+    0 20px 50px -16px rgba(16, 80, 40, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
   pointer-events: auto;
-  backdrop-filter: blur(6px);
-  animation: vnmap-pop 0.12s ease;
+  backdrop-filter: blur(12px);
+  animation: vnmap-pop 0.15s ease-out;
 }
 
 @keyframes vnmap-pop {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .vnmap-tooltip__name {
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   color: #0f5132;
 }
 
@@ -84,70 +92,79 @@
 }
 
 .vnmap-tooltip__label {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: #2e8b57;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .vnmap-tooltip__region-badge {
   display: inline-block;
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 999px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .vnmap-tooltip__chips {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .vnmap-tooltip__chip {
-  background: #e6f7e6;
+  background: linear-gradient(135deg, #e8f8e8, #d4f0d4);
   color: #14532d;
   border-radius: 8px;
   padding: 4px 10px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
+  border: 1px solid rgba(46, 139, 87, 0.1);
 }
 
 .vnmap-tooltip__cta {
   width: 100%;
   border: none;
-  background: #2e8b57;
+  background: linear-gradient(135deg, #2e8b57, #1a6b3f);
   color: #fff;
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(46, 139, 87, 0.3);
 }
-.vnmap-tooltip__cta:hover { background: #14532d; }
+.vnmap-tooltip__cta:hover {
+  background: linear-gradient(135deg, #1a6b3f, #0f5132);
+  box-shadow: 0 6px 20px rgba(46, 139, 87, 0.4);
+}
 .vnmap-tooltip__cta:active { transform: scale(0.97); }
-
 
 .vnmap-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 14px;
+  gap: 8px 16px;
   justify-content: center;
-  margin-top: 18px;
+  margin-top: 24px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
 }
 
 .vnmap-legend__item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #2d4a36;
   font-weight: 600;
 }
@@ -155,6 +172,7 @@
 .vnmap-legend__dot {
   width: 12px;
   height: 12px;
-  border-radius: 3px;
+  border-radius: 4px;
   display: inline-block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }

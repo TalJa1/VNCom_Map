@@ -6,15 +6,16 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3.4;
-  border-radius: 28px;
+  border-radius: 24px;
   overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 80% 10%, rgba(255, 233, 168, 0.5), transparent 60%),
-    linear-gradient(160deg, #f3fff4, #e2fbe8 55%, #d2f6e0);
-  border: 1px solid rgba(46, 139, 87, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 30px 70px -30px rgba(16, 80, 40, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 24px 48px -12px rgba(16, 80, 40, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .ntmap__bg {
@@ -28,15 +29,16 @@
   animation: ntFloat 9s ease-in-out infinite;
 }
 .ntmap__land {
-  filter: drop-shadow(0 14px 24px rgba(16, 80, 40, 0.25));
+  filter: drop-shadow(0 10px 20px rgba(16, 80, 40, 0.2));
 }
 .ntmap__sun {
-  fill: #ffd24a;
+  fill: #ffc940;
   animation: ntSunPulse 5s ease-in-out infinite;
   transform-origin: 4980px 8220px;
+  filter: drop-shadow(0 0 30px rgba(255, 201, 64, 0.5));
 }
 .ntmap__coast {
-  stroke: rgba(27, 138, 143, 0.55);
+  stroke: rgba(27, 138, 143, 0.45);
   stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 4 10;
@@ -45,7 +47,7 @@
 
 @keyframes ntFloat {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-6px) rotate(-0.6deg); }
+  50% { transform: translateY(-2px) rotate(-0.3deg); }
 }
 @keyframes ntSunPulse {
   0%, 100% { opacity: 0.9; transform: scale(1); }
@@ -80,11 +82,11 @@
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  background: rgba(46, 139, 87, 0.45);
+  background: rgba(46, 139, 87, 0.35);
   animation: ntPulse 2.4s ease-out infinite;
 }
 @keyframes ntPulse {
-  0% { transform: scale(0.6); opacity: 0.8; }
+  0% { transform: scale(0.6); opacity: 0.7; }
   70% { transform: scale(1.9); opacity: 0; }
   100% { opacity: 0; }
 }
@@ -96,16 +98,18 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
-  box-shadow: 0 6px 16px rgba(16, 80, 40, 0.35);
-  border: 2px solid #2e8b57;
+  box-shadow: 0 4px 12px rgba(16, 80, 40, 0.2);
+  border: 1.5px solid rgba(46, 139, 87, 0.4);
+  backdrop-filter: blur(8px);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .ntmap__spot:hover .ntmap__dot,
 .ntmap__spot:focus-visible .ntmap__dot {
   transform: scale(1.22);
-  box-shadow: 0 10px 22px rgba(16, 80, 40, 0.5);
+  box-shadow: 0 8px 20px rgba(16, 80, 40, 0.35);
+  background: #fff;
 }
 
 .ntmap__pop {
@@ -119,10 +123,11 @@
   flex-direction: column;
   gap: 2px;
   padding: 10px 14px;
-  background: #14532d;
+  background: rgba(15, 50, 30, 0.92);
   color: #eafff0;
   border-radius: 14px;
-  box-shadow: 0 16px 34px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
   animation: ntPop 0.18s ease-out;
   pointer-events: none;
 }
@@ -133,7 +138,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 7px solid transparent;
-  border-top-color: #14532d;
+  border-top-color: rgba(15, 50, 30, 0.92);
 }
 @keyframes ntPop {
   from { opacity: 0; transform: translate(-50%, 6px); }
@@ -162,39 +167,49 @@
   position: absolute;
   left: 16px;
   bottom: 14px;
-  background: rgba(20, 83, 45, 0.9);
+  background: rgba(15, 50, 30, 0.85);
   color: #eafff0;
   font-size: 0.78rem;
   font-weight: 700;
   padding: 7px 14px;
   border-radius: 999px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 3;
 }
 
-.ntmap__hint {
+/* ---- footer info ---- */
+.ntmap__footer {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 0.95rem;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
-.ntmap__hint-dot {
-  width: 12px;
-  height: 12px;
+
+.ntmap__footer-pulse {
+  position: relative;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #2e8b57;
-  box-shadow: 0 0 0 0 rgba(46, 139, 87, 0.6);
-  animation: ntPulse 2s ease-out infinite;
   flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(46, 139, 87, 0.5);
+  animation: ntPulse 2s ease-out infinite;
 }
-.ntmap__count {
-  margin-top: 6px;
-  color: var(--green-d);
-  font-size: 0.92rem;
+
+.ntmap__footer-text {
+  font-size: 0.82rem;
+  color: #3d6b4e;
+  line-height: 1.4;
+  font-weight: 500;
 }
-.ntmap__count strong {
-  font-size: 1.4rem;
-  color: var(--green);
+.ntmap__footer-text strong {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1a5c35;
 }

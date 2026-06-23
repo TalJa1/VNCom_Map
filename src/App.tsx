@@ -231,9 +231,7 @@ function App() {
             <NinhThuanMap onSelect={focusStory} />
           </Reveal>
           <Reveal className="mapgrid__national" variant="flip" delay={450}>
-            <div className="mapgrid__nationalcard">
-              <VietnamMap onViewProducts={handleProvince} />
-            </div>
+            <VietnamMap onViewProducts={handleProvince} />
           </Reveal>
         </div>
       </section>

@@ -451,13 +451,6 @@
   gap: clamp(26px, 4vw, 52px);
   align-items: center;
 }
-.mapgrid__nationalcard {
-  background: #fff;
-  border-radius: 28px;
-  padding: 18px;
-  box-shadow: 0 30px 70px -34px rgba(16,80,40,0.5);
-  border: 1px solid #e2f2e2;
-}
 
 /* ============ 4 · STORY CARDS ============ */
 .section--stories { background: var(--bg-soft); max-width: none; }

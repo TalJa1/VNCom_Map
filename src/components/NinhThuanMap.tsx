@@ -98,12 +98,11 @@ export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
         <span className="ntmap__tag">{t.map.region}</span>
       </div>
 
-      <p className="ntmap__hint">
-        <span className="ntmap__hint-dot" />
-        {t.map.hint}
-      </p>
-      <div className="ntmap__count">
-        <strong>{items.length}</strong> {t.map.legendDelicacies}
+      <div className="ntmap__footer">
+        <span className="ntmap__footer-pulse" />
+        <span className="ntmap__footer-text">
+          <strong>{items.length}</strong> {t.map.legendDelicacies} · {t.map.hint}
+        </span>
       </div>
     </div>
   )
