@@ -1,235 +1,347 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import VietnamMap from './components/VietnamMap'
-import Marketplace from './components/Marketplace'
-import CartDrawer, { type CartItem } from './components/CartDrawer'
-import type { Product } from './data/products'
+import NinhThuanMap from './components/NinhThuanMap'
+import Reveal from './components/Reveal'
+import { PRODUCTS } from './data/products'
+import { useLang, useT } from './i18n'
 import './App.css'
 
-function App() {
-  const [filterProvinceKey, setFilterProvinceKey] = useState<string | null>(null)
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [cartOpen, setCartOpen] = useState(false)
+const NINH_THUAN = PRODUCTS.filter((p) => p.provinceKey === 'vn-nt').slice(0, 12)
 
-  const marketRef = useRef<HTMLElement>(null)
+/* Decorative gradient palettes cycled across the story cards. */
+const CARD_GRADIENTS = [
+  'linear-gradient(150deg,#1f7a4d,#6fcf97)',
+  'linear-gradient(150deg,#b8860b,#f4c430)',
+  'linear-gradient(150deg,#1b8a8f,#7ee8e0)',
+  'linear-gradient(150deg,#a63d57,#f2849e)',
+  'linear-gradient(150deg,#2e8b57,#bfe86d)',
+  'linear-gradient(150deg,#3a6ea5,#9ad0ec)',
+]
 
-  const cartCount = cart.reduce((s, i) => s + i.qty, 0)
-
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-
-  const handleViewProducts = useCallback((key: string) => {
-    setFilterProvinceKey(key)
-    marketRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
-  const addToCart = useCallback((p: Product) => {
-    setCart((prev) => {
-      const found = prev.find((i) => i.product.id === p.id)
-      if (found) {
-        return prev.map((i) =>
-          i.product.id === p.id ? { ...i, qty: i.qty + 1 } : i,
-        )
-      }
-      return [...prev, { product: p, qty: 1 }]
-    })
-    setCartOpen(true)
-  }, [])
-
-  const changeQty = useCallback((id: string, delta: number) => {
-    setCart((prev) =>
-      prev
-        .map((i) =>
-          i.product.id === id ? { ...i, qty: Math.max(0, i.qty + delta) } : i,
-        )
-        .filter((i) => i.qty > 0),
-    )
-  }, [])
-
-  const removeItem = useCallback(
-    (id: string) => setCart((prev) => prev.filter((i) => i.product.id !== id)),
-    [],
+function LangSwitch() {
+  const { lang, setLang } = useLang()
+  return (
+    <div className="langswitch" role="group" aria-label="Language">
+      <button
+        className={lang === 'en' ? 'is-on' : ''}
+        onClick={() => setLang('en')}
+        aria-pressed={lang === 'en'}
+      >
+        EN
+      </button>
+      <button
+        className={lang === 'vi' ? 'is-on' : ''}
+        onClick={() => setLang('vi')}
+        aria-pressed={lang === 'vi'}
+      >
+        VI
+      </button>
+      <span className="langswitch__thumb" data-lang={lang} aria-hidden="true" />
+    </div>
   )
+}
+
+/* A field of slowly drifting leaf glyphs used as section decoration. */
+function LeafField() {
+  const leaves = ['🌿', '🍃', '🌱', '🍂', '🌾']
+  return (
+    <div className="leaffield" aria-hidden="true">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <span
+          key={i}
+          className="leaffield__leaf"
+          style={{
+            left: `${(i * 11 + 4) % 100}%`,
+            animationDelay: `${(i * 1.7) % 9}s`,
+            animationDuration: `${11 + (i % 5) * 2}s`,
+            fontSize: `${1 + (i % 4) * 0.4}rem`,
+          }}
+        >
+          {leaves[i % leaves.length]}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function App() {
+  const t = useT()
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [flashId, setFlashId] = useState<string | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const scrollTo = useCallback((id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
+  }, [])
+
+  // From the map: jump to a story card and flash it.
+  const focusStory = useCallback((productId: string) => {
+    const el = document.getElementById(`story-${productId}`)
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setFlashId(productId)
+    window.setTimeout(() => setFlashId((cur) => (cur === productId ? null : cur)), 1800)
+  }, [])
+
+  // The national map links every province to the Ninh Thuận stories section.
+  const handleProvince = useCallback(() => scrollTo('stories'), [scrollTo])
 
   return (
     <div className="app">
-      <header className="nav">
-        <div className="nav__brand" onClick={() => scrollTo('home')}>
-          <span className="nav__logo">🌾</span>
-          <span>
-            Nông Sản <strong>Việt</strong>
+      {/* ---------------- NAV ---------------- */}
+      <header className={`nav ${scrolled ? 'nav--solid' : ''}`}>
+        <button className="nav__brand" onClick={() => scrollTo('gioi-thieu')}>
+          <span className="nav__logo">🌱</span>
+          <span className="nav__brandtext">
+            <strong>{t.brand.name}</strong>
+            <small>{t.brand.tagline}</small>
           </span>
-        </div>
-        <nav className="nav__links">
-          <button onClick={() => scrollTo('home')}>Bản đồ</button>
-          <button onClick={() => scrollTo('market')}>Gian hàng</button>
-          <button onClick={() => scrollTo('story')}>Câu chuyện</button>
-          <button onClick={() => scrollTo('impact')}>Tác động</button>
-        </nav>
-        <button className="nav__cart" onClick={() => setCartOpen(true)}>
-          🛒 Giỏ hàng
-          {cartCount > 0 && <span className="nav__cartbadge">{cartCount}</span>}
         </button>
+
+        <nav className={`nav__links ${menuOpen ? 'is-open' : ''}`}>
+          <button onClick={() => scrollTo('gioi-thieu')}>{t.nav.intro}</button>
+          <button onClick={() => scrollTo('story')}>{t.nav.story}</button>
+          <button onClick={() => scrollTo('map')}>{t.nav.map}</button>
+          <button onClick={() => scrollTo('stories')}>{t.nav.stories}</button>
+          <button onClick={() => scrollTo('handbook')}>{t.nav.handbook}</button>
+          <button onClick={() => scrollTo('connect')}>{t.nav.connect}</button>
+        </nav>
+
+        <div className="nav__right">
+          <LangSwitch />
+          <button
+            className={`nav__burger ${menuOpen ? 'is-open' : ''}`}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Menu"
+          >
+            <span /><span /><span />
+          </button>
+        </div>
       </header>
 
-      {/* ---------- HOME / MAP ---------- */}
-      <section id="home" className="hero">
-        <div className="hero__banner">
-          <span className="hero__eyebrow">Bản đồ nông sản Việt Nam</span>
+      {/* ---------------- 1 · HERO ---------------- */}
+      <section id="gioi-thieu" className="hero">
+        <div className="hero__bg" aria-hidden="true">
+          <div className="hero__blob hero__blob--1" />
+          <div className="hero__blob hero__blob--2" />
+          <div className="hero__grain" />
+        </div>
+        <LeafField />
+
+        <div className="hero__inner">
+          <Reveal as="span" className="eyebrow eyebrow--light">
+            🌾 {t.hero.eyebrow}
+          </Reveal>
           <h1 className="hero__title">
-            Mỗi vùng đất, một đặc sản tự hào
+            {t.hero.title.map((line, i) => (
+              <Reveal as="span" key={i} className="hero__titleline" delay={120 + i * 120}>
+                {line}
+              </Reveal>
+            ))}
           </h1>
-          <p className="hero__sub">
-            Rê chuột lên bản đồ để khám phá nông sản đặc trưng của 63 tỉnh thành
-            và đặt mua trực tiếp từ người nông dân.
-          </p>
-          <div className="hero__actions">
-            <button className="btn btn--primary" onClick={() => scrollTo('market')}>
-              Khám phá gian hàng
+          <Reveal as="p" className="hero__sub" delay={360}>
+            {t.hero.sub}
+          </Reveal>
+          <Reveal className="hero__actions" delay={460}>
+            <button className="btn btn--primary btn--lg" onClick={() => scrollTo('map')}>
+              {t.hero.cta}
+              <span className="btn__arrow">↗</span>
             </button>
-            <button className="btn btn--ghost" onClick={() => scrollTo('story')}>
-              Câu chuyện dự án
-            </button>
-          </div>
+          </Reveal>
+
+          <Reveal className="hero__badges" delay={560}>
+            {t.hero.badges.map((b, i) => (
+              <button
+                key={b.label}
+                className="herobadge"
+                style={{ animationDelay: `${i * 0.25}s` }}
+                onClick={() => scrollTo(['map', 'stories', 'handbook'][i])}
+              >
+                <span className="herobadge__ring">{b.icon}</span>
+                <span className="herobadge__label">{b.label}</span>
+              </button>
+            ))}
+          </Reveal>
         </div>
 
-        <div className="hero__map">
-          <VietnamMap
-            onViewProducts={handleViewProducts}
-          />
-        </div>
+        <button className="hero__scroll" onClick={() => scrollTo('story')}>
+          <span>{t.hero.scroll}</span>
+          <span className="hero__scroll-mouse"><i /></span>
+        </button>
       </section>
 
-      {/* ---------- MARKETPLACE ---------- */}
-      <section id="market" className="section section--market" ref={marketRef}>
-        <div className="section__head">
-          <span className="section__eyebrow">Niêm yết &amp; mua bán</span>
-          <h2>Gian hàng nông sản</h2>
-          <p>
-            Nông sản được niêm yết minh bạch theo nguồn gốc, giá cả và tiêu chuẩn chất
-            lượng — kết nối thẳng từ nhà vườn, hợp tác xã tới tay bạn.
-          </p>
-        </div>
-        <Marketplace
-          filterProvinceKey={filterProvinceKey}
-          onClearProvinceFilter={() => setFilterProvinceKey(null)}
-          onAddToCart={addToCart}
-        />
-      </section>
-
-      {/* ---------- STORY ---------- */}
+      {/* ---------------- 2 · THE BIG STORY ---------------- */}
       <section id="story" className="section section--story">
-        <div className="section__head">
-          <span className="section__eyebrow">Câu chuyện dự án</span>
-          <h2>Vì sao chúng tôi bắt đầu</h2>
-        </div>
         <div className="story">
-          <div className="story__lead">
-            <p>
-              <strong>Nông Sản Việt</strong> ra đời từ một câu hỏi giản dị: tại sao những
-              nông sản tuyệt vời của Việt Nam lại thường được bán với giá rẻ, qua nhiều
-              khâu trung gian, trong khi người nông dân vẫn chật vật?
-            </p>
-            <p>
-              Chúng tôi xây dựng một bản đồ số kết nối từng vùng đất với đặc sản của nó,
-              giúp người tiêu dùng mua tận gốc và người nông dân bán đúng giá trị —
-              minh bạch, công bằng và bền vững.
-            </p>
+          <Reveal className="story__media" variant="left">
+            <div className="story__photo">
+              <span className="story__photo-emoji">🧑‍🌾</span>
+              <div className="story__photo-glow" />
+            </div>
+            <Reveal as="blockquote" className="story__pull" delay={200}>
+              “{t.bigStory.pull}”
+            </Reveal>
+            <div className="story__stamp">Ninh Thuận</div>
+          </Reveal>
+
+          <div className="story__body">
+            <Reveal as="span" className="eyebrow">{t.bigStory.eyebrow}</Reveal>
+            <Reveal as="h2" className="section__title" delay={80}>
+              {t.bigStory.title}
+            </Reveal>
+            {t.bigStory.paragraphs.map((p, i) => (
+              <Reveal as="p" key={i} className="story__para" delay={160 + i * 90}>
+                {p}
+              </Reveal>
+            ))}
+            <Reveal delay={460}>
+              <button className="btn btn--primary" onClick={() => scrollTo('stories')}>
+                {t.bigStory.cta}
+                <span className="btn__arrow">→</span>
+              </button>
+            </Reveal>
           </div>
-          <ol className="timeline">
-            <li>
-              <span className="timeline__year">2023</span>
-              <div>
-                <h4>Khởi nguồn</h4>
-                <p>Khảo sát hơn 200 hợp tác xã và nhà vườn trên khắp ba miền.</p>
-              </div>
-            </li>
-            <li>
-              <span className="timeline__year">2024</span>
-              <div>
-                <h4>Xây nền tảng</h4>
-                <p>Số hóa bản đồ nông sản 63 tỉnh thành và chuẩn hóa truy xuất nguồn gốc.</p>
-              </div>
-            </li>
-            <li>
-              <span className="timeline__year">2025</span>
-              <div>
-                <h4>Kết nối thị trường</h4>
-                <p>Mở gian hàng trực tuyến, đưa nông sản tới người tiêu dùng cả nước.</p>
-              </div>
-            </li>
-            <li>
-              <span className="timeline__year">2026</span>
-              <div>
-                <h4>Lan tỏa</h4>
-                <p>Hướng tới xuất khẩu và nâng tầm thương hiệu nông sản Việt.</p>
-              </div>
-            </li>
-          </ol>
         </div>
       </section>
 
-      {/* ---------- IMPACT ---------- */}
-      <section id="impact" className="section section--impact">
+      {/* ---------------- 3 · THE DIGITAL MAP ---------------- */}
+      <section id="map" className="section section--map">
+        <LeafField />
         <div className="section__head">
-          <span className="section__eyebrow">Tác động xã hội</span>
-          <h2>Giá trị chúng tôi tạo ra</h2>
-          <p>
-            Mỗi đơn hàng là một nhịp cầu giữa thành thị và nông thôn, góp phần xây dựng
-            nền nông nghiệp công bằng và bền vững hơn.
-          </p>
+          <Reveal as="span" className="eyebrow">{t.map.eyebrow}</Reveal>
+          <Reveal as="h2" className="section__title" delay={80}>{t.map.title}</Reveal>
+          <Reveal as="p" className="section__lead" delay={160}>{t.map.sub}</Reveal>
         </div>
-        <div className="impact__grid">
-          {[
-            { icon: '👨‍🌾', stat: '1.200+', label: 'Hộ nông dân & HTX được kết nối' },
-            { icon: '🚜', stat: '63', label: 'Tỉnh thành phủ sóng trên bản đồ' },
-            { icon: '💰', stat: '+35%', label: 'Thu nhập trung bình tăng cho nhà nông' },
-            { icon: '🌱', stat: '80%', label: 'Sản phẩm đạt chuẩn VietGAP/OCOP' },
-          ].map((it) => (
-            <div key={it.label} className="impact__card">
-              <span className="impact__icon">{it.icon}</span>
-              <span className="impact__stat">{it.stat}</span>
-              <span className="impact__label">{it.label}</span>
+
+        <div className="mapgrid">
+          <Reveal className="mapgrid__focus" variant="left">
+            <NinhThuanMap onSelect={focusStory} />
+          </Reveal>
+          <Reveal className="mapgrid__national" variant="right" delay={120}>
+            <div className="mapgrid__nationalcard">
+              <VietnamMap onViewProducts={handleProvince} />
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------------- 4 · LOCAL INSPIRATIONAL STORIES ---------------- */}
+      <section id="stories" className="section section--stories">
+        <div className="section__head">
+          <Reveal as="span" className="eyebrow">{t.stories.eyebrow}</Reveal>
+          <Reveal as="h2" className="section__title" delay={80}>{t.stories.title}</Reveal>
+          <Reveal as="p" className="section__lead" delay={160}>{t.stories.sub}</Reveal>
+        </div>
+
+        <div className="storycards">
+          {NINH_THUAN.map((p, i) => (
+            <Reveal
+              key={p.id}
+              id={`story-${p.id}`}
+              className={`storycard ${flashId === p.id ? 'is-flash' : ''}`}
+              variant="zoom"
+              delay={(i % 3) * 90}
+            >
+              <div className="storycard__art" style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}>
+                <span className="storycard__num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="storycard__emoji">{p.emoji}</span>
+                <span className="storycard__soon">{t.stories.soon}</span>
+              </div>
+              <div className="storycard__body">
+                <h3 className="storycard__name">{p.name}</h3>
+                <p className="storycard__producer">{p.producer}</p>
+                <div className="storycard__tags">
+                  {p.tags.map((tag) => (
+                    <span key={tag} className="storycard__tag">{tag}</span>
+                  ))}
+                </div>
+                <button className="storycard__cta" disabled>
+                  {t.stories.readStory} →
+                </button>
+              </div>
+            </Reveal>
           ))}
         </div>
-        <div className="impact__pillars">
-          <div className="impact__pillar">
-            <h4>🤝 Thương mại công bằng</h4>
-            <p>Rút ngắn khâu trung gian, người nông dân nhận phần xứng đáng với công sức.</p>
+        <Reveal as="p" className="storycards__counter">
+          {t.stories.counter(NINH_THUAN.length)}
+        </Reveal>
+      </section>
+
+      {/* ---------------- 5 · DIGITAL HANDBOOK ---------------- */}
+      <section id="handbook" className="section section--handbook">
+        <div className="handbook">
+          <div className="handbook__body">
+            <Reveal as="span" className="eyebrow eyebrow--light">{t.handbook.eyebrow}</Reveal>
+            <Reveal as="h2" className="section__title section__title--light" delay={80}>
+              {t.handbook.title}
+            </Reveal>
+            {t.handbook.paragraphs.map((p, i) => (
+              <Reveal as="p" key={i} className="handbook__para" delay={160 + i * 90}>
+                {p}
+              </Reveal>
+            ))}
+            <Reveal className="handbook__skills" delay={340}>
+              {t.handbook.skills.map((s, i) => (
+                <span className="handbook__skill" key={s.label} style={{ transitionDelay: `${i * 60}ms` }}>
+                  <span className="handbook__skill-icon">{s.icon}</span>
+                  {s.label}
+                </span>
+              ))}
+            </Reveal>
+            <Reveal delay={440}>
+              <button className="btn btn--accent btn--lg">
+                {t.handbook.cta}
+                <span className="btn__arrow">↗</span>
+              </button>
+            </Reveal>
           </div>
-          <div className="impact__pillar">
-            <h4>🔍 Minh bạch nguồn gốc</h4>
-            <p>Mỗi sản phẩm gắn với vùng trồng cụ thể, truy xuất rõ ràng tới tận nhà vườn.</p>
-          </div>
-          <div className="impact__pillar">
-            <h4>♻️ Phát triển bền vững</h4>
-            <p>Ưu tiên canh tác sạch, giảm lãng phí và bảo tồn đặc sản bản địa.</p>
-          </div>
+
+          <Reveal className="handbook__visual" variant="right">
+            <div className="handbook__book">
+              <div className="handbook__cover">
+                <span className="handbook__cover-icon">📘</span>
+                <span className="handbook__cover-title">Digital Transformation Handbook</span>
+                <span className="handbook__cover-sub">{t.handbook.pages}</span>
+              </div>
+              <div className="handbook__pageA" />
+              <div className="handbook__pageB" />
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="footer__brand">🌾 Nông Sản Việt</div>
-        <p>Kết nối nông sản Việt Nam — từ vùng đất tới bữa ăn của bạn.</p>
-        <small>© 2026 Nông Sản Việt. Dự án demo phục vụ mục đích trình diễn.</small>
+      {/* ---------------- 6 · FOOTER & CONNECT ---------------- */}
+      <footer id="connect" className="footer">
+        <LeafField />
+        <div className="footer__inner">
+          <Reveal as="span" className="eyebrow eyebrow--light">{t.footer.eyebrow}</Reveal>
+          <Reveal as="h2" className="footer__title" delay={80}>{t.footer.title}</Reveal>
+          <Reveal as="p" className="footer__sub" delay={160}>{t.footer.sub}</Reveal>
+
+          <Reveal className="footer__actions" delay={260}>
+            <a className="footer__btn" href="#" onClick={(e) => e.preventDefault()}>
+              <span>🌐</span> {t.footer.social}
+            </a>
+            <a className="footer__btn" href="mailto:hello@viet-farm.org">
+              <span>✉️</span> {t.footer.email}
+            </a>
+            <a className="footer__btn" href="tel:+84000000000">
+              <span>📞</span> {t.footer.phone}
+            </a>
+          </Reveal>
+        </div>
+        <div className="footer__bar">
+          <span className="footer__brand">🌱 {t.brand.name}</span>
+          <small>© {new Date().getFullYear()} · {t.footer.rights}</small>
+        </div>
       </footer>
-
-      <button
-        className="fab-cart"
-        onClick={() => setCartOpen(true)}
-        aria-label="Mở giỏ hàng"
-      >
-        🛒
-        {cartCount > 0 && <span className="fab-cart__badge">{cartCount}</span>}
-      </button>
-
-      <CartDrawer
-        open={cartOpen}
-        items={cart}
-        onClose={() => setCartOpen(false)}
-        onChangeQty={changeQty}
-        onRemove={removeItem}
-      />
     </div>
   )
 }

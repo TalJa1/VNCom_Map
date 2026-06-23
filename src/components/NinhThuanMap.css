@@ -1,0 +1,197 @@
+.ntmap {
+  width: 100%;
+}
+
+.ntmap__panel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.4;
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 80% 10%, rgba(255, 233, 168, 0.5), transparent 60%),
+    linear-gradient(160deg, #f3fff4, #e2fbe8 55%, #d2f6e0);
+  border: 1px solid rgba(46, 139, 87, 0.18);
+  box-shadow:
+    0 30px 70px -30px rgba(16, 80, 40, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.ntmap__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ntmap__land {
+  filter: drop-shadow(0 14px 24px rgba(16, 80, 40, 0.25));
+  transform-origin: center;
+  animation: ntFloat 9s ease-in-out infinite;
+}
+.ntmap__sun {
+  fill: #ffd24a;
+  animation: ntSunPulse 5s ease-in-out infinite;
+  transform-origin: 312px 64px;
+}
+.ntmap__coast {
+  stroke: rgba(27, 138, 143, 0.55);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 4 10;
+  animation: ntCoast 14s linear infinite;
+}
+
+@keyframes ntFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-0.6deg); }
+}
+@keyframes ntSunPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes ntCoast {
+  to { stroke-dashoffset: -140; }
+}
+
+/* ---- hotspots ---- */
+.ntmap__spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  animation: ntRise 0.6s both ease-out;
+}
+.ntmap__spot.is-active { z-index: 6; }
+
+@keyframes ntRise {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 14px)) scale(0.4); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.ntmap__pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(46, 139, 87, 0.45);
+  animation: ntPulse 2.4s ease-out infinite;
+}
+@keyframes ntPulse {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.ntmap__dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 1rem;
+  box-shadow: 0 6px 16px rgba(16, 80, 40, 0.35);
+  border: 2px solid #2e8b57;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.ntmap__spot:hover .ntmap__dot,
+.ntmap__spot:focus-visible .ntmap__dot {
+  transform: scale(1.22);
+  box-shadow: 0 10px 22px rgba(16, 80, 40, 0.5);
+}
+
+.ntmap__pop {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  background: #14532d;
+  color: #eafff0;
+  border-radius: 14px;
+  box-shadow: 0 16px 34px -10px rgba(0, 0, 0, 0.5);
+  animation: ntPop 0.18s ease-out;
+  pointer-events: none;
+}
+.ntmap__pop::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: #14532d;
+}
+@keyframes ntPop {
+  from { opacity: 0; transform: translate(-50%, 6px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+.ntmap__pop-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8fe3b0;
+  font-weight: 700;
+}
+.ntmap__pop-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+.ntmap__pop-cta {
+  font-size: 0.75rem;
+  color: #ffd24a;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.ntmap__tag {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  background: rgba(20, 83, 45, 0.9);
+  color: #eafff0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  z-index: 3;
+}
+
+.ntmap__hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.ntmap__hint-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2e8b57;
+  box-shadow: 0 0 0 0 rgba(46, 139, 87, 0.6);
+  animation: ntPulse 2s ease-out infinite;
+  flex-shrink: 0;
+}
+.ntmap__count {
+  margin-top: 6px;
+  color: var(--green-d);
+  font-size: 0.92rem;
+}
+.ntmap__count strong {
+  font-size: 1.4rem;
+  color: var(--green);
+}

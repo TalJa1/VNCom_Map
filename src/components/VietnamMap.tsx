@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo, type MouseEvent } from 'react'
 import { vietnamMap } from '../data/vietnamMap'
 import { PROVINCES, REGIONS } from '../data/provinces'
-import { PRODUCTS } from '../data/products'
+import { useT } from '../i18n'
 import './VietnamMap.css'
 
 interface VietnamMapProps {
@@ -15,14 +15,12 @@ interface HoverState {
 }
 
 export default function VietnamMap({ onViewProducts }: VietnamMapProps) {
+  const t = useT()
   const [hover, setHover] = useState<HoverState | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
 
   const hovered = hover ? PROVINCES[hover.key] : undefined
   const hoveredRegion = hovered ? REGIONS[hovered.region] : undefined
-  const hoveredProductCount = hover
-    ? PRODUCTS.filter((p) => p.provinceKey === hover.key).length
-    : 0
 
   const legend = useMemo(() => Object.values(REGIONS), [])
 
@@ -99,16 +97,14 @@ export default function VietnamMap({ onViewProducts }: VietnamMapProps) {
             {hoveredRegion?.name}
           </span>
           <div className="vnmap-tooltip__name">{hovered.name}</div>
-          <div className="vnmap-tooltip__label">Nông sản đặc trưng</div>
+          <div className="vnmap-tooltip__label">{t.map.quickTitle}</div>
           <div className="vnmap-tooltip__chips">
             {hovered.nongsan.map((n) => (
               <span key={n} className="vnmap-tooltip__chip">{n}</span>
             ))}
           </div>
           <button className="vnmap-tooltip__cta" onClick={() => onViewProducts(hover.key)}>
-            {hoveredProductCount > 0
-              ? `Xem ${hoveredProductCount} sản phẩm đang bán →`
-              : 'Xem gian hàng nông sản →'}
+            {t.stories.eyebrow} →
           </button>
         </div>
       )}
