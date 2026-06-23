@@ -1,4 +1,8 @@
-.app { min-height: 100vh; overflow: hidden; }
+.app { min-height: 100vh; overflow: hidden; cursor: none; }
+.app *, .app *::before, .app *::after { cursor: none !important; }
+@media (pointer: coarse) {
+  .app, .app *, .app *::before, .app *::after { cursor: auto !important; }
+}
 
 /* ============ SHARED ============ */
 .eyebrow {

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import VietnamMap from './components/VietnamMap'
 import NinhThuanMap from './components/NinhThuanMap'
+import LeafCursor from './components/LeafCursor'
 import Reveal from './components/Reveal'
 import { PRODUCTS } from './data/products'
 import { useLang, useT } from './i18n'
@@ -95,6 +96,7 @@ function App() {
 
   return (
     <div className="app">
+      <LeafCursor />
       {/* ---------------- NAV ---------------- */}
       <header className={`nav ${scrolled ? 'nav--solid' : ''}`}>
         <button className="nav__brand" onClick={() => scrollTo('gioi-thieu')}>

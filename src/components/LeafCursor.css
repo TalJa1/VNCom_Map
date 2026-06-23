@@ -1,0 +1,33 @@
+.leafcursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.leafcursor__branch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.4rem;
+  will-change: transform;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  margin-left: -12px;
+  margin-top: -14px;
+}
+
+.leafcursor__leaf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+  margin-left: -8px;
+  margin-top: -8px;
+  transition: opacity 0.3s;
+}
+
+@media (pointer: coarse) {
+  .leafcursor { display: none; }
+}
