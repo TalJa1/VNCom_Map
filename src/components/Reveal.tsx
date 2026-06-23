@@ -8,7 +8,7 @@ interface RevealProps {
   /** Stagger delay in ms, applied as a CSS transition-delay. */
   delay?: number
   /** Animation flavor. */
-  variant?: 'up' | 'left' | 'right' | 'zoom'
+  variant?: 'up' | 'left' | 'right' | 'zoom' | 'down' | 'flip'
   style?: CSSProperties
   id?: string
 }

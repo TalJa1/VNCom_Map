@@ -136,37 +136,43 @@ function App() {
         <LeafField />
 
         <div className="hero__inner">
-          <Reveal as="span" className="eyebrow eyebrow--light">
+          <Reveal as="span" className="eyebrow eyebrow--light" variant="down" delay={100}>
             🌾 {t.hero.eyebrow}
           </Reveal>
           <h1 className="hero__title">
             {t.hero.title.map((line, i) => (
-              <Reveal as="span" key={i} className="hero__titleline" delay={120 + i * 120}>
+              <Reveal as="span" key={i} className="hero__titleline" variant={i === 0 ? 'left' : 'right'} delay={250 + i * 200}>
                 {line}
               </Reveal>
             ))}
           </h1>
-          <Reveal as="p" className="hero__sub" delay={360}>
+          <Reveal as="p" className="hero__sub" variant="up" delay={600}>
             {t.hero.sub}
           </Reveal>
-          <Reveal className="hero__actions" delay={460}>
+          <Reveal className="hero__actions" variant="zoom" delay={800}>
             <button className="btn btn--primary btn--lg" onClick={() => scrollTo('map')}>
               {t.hero.cta}
               <span className="btn__arrow">↗</span>
             </button>
           </Reveal>
 
-          <Reveal className="hero__badges" delay={560}>
+          <Reveal className="hero__badges" variant="up" delay={1000}>
             {t.hero.badges.map((b, i) => (
-              <button
+              <Reveal
                 key={b.label}
-                className="herobadge"
+                className="herobadge-wrap"
+                variant="zoom"
+                delay={1100 + i * 180}
                 style={{ animationDelay: `${i * 0.25}s` }}
-                onClick={() => scrollTo(['map', 'stories', 'handbook'][i])}
               >
-                <span className="herobadge__ring">{b.icon}</span>
-                <span className="herobadge__label">{b.label}</span>
-              </button>
+                <button
+                  className="herobadge"
+                  onClick={() => scrollTo(['map', 'stories', 'handbook'][i])}
+                >
+                  <span className="herobadge__ring">{b.icon}</span>
+                  <span className="herobadge__label">{b.label}</span>
+                </button>
+              </Reveal>
             ))}
           </Reveal>
         </div>
@@ -180,28 +186,28 @@ function App() {
       {/* ---------------- 2 · THE BIG STORY ---------------- */}
       <section id="story" className="section section--story">
         <div className="story">
-          <Reveal className="story__media" variant="left">
+          <Reveal className="story__media" variant="left" delay={0}>
             <div className="story__photo">
               <span className="story__photo-emoji">🧑‍🌾</span>
               <div className="story__photo-glow" />
             </div>
-            <Reveal as="blockquote" className="story__pull" delay={200}>
-              “{t.bigStory.pull}”
+            <Reveal as="blockquote" className="story__pull" variant="up" delay={400}>
+              "{t.bigStory.pull}"
             </Reveal>
             <div className="story__stamp">Ninh Thuận</div>
           </Reveal>
 
           <div className="story__body">
-            <Reveal as="span" className="eyebrow">{t.bigStory.eyebrow}</Reveal>
-            <Reveal as="h2" className="section__title" delay={80}>
+            <Reveal as="span" className="eyebrow" variant="right" delay={100}>{t.bigStory.eyebrow}</Reveal>
+            <Reveal as="h2" className="section__title" variant="right" delay={200}>
               {t.bigStory.title}
             </Reveal>
             {t.bigStory.paragraphs.map((p, i) => (
-              <Reveal as="p" key={i} className="story__para" delay={160 + i * 90}>
+              <Reveal as="p" key={i} className="story__para" variant="right" delay={350 + i * 150}>
                 {p}
               </Reveal>
             ))}
-            <Reveal delay={460}>
+            <Reveal variant="zoom" delay={800}>
               <button className="btn btn--primary" onClick={() => scrollTo('stories')}>
                 {t.bigStory.cta}
                 <span className="btn__arrow">→</span>
@@ -215,16 +221,16 @@ function App() {
       <section id="map" className="section section--map">
         <LeafField />
         <div className="section__head">
-          <Reveal as="span" className="eyebrow">{t.map.eyebrow}</Reveal>
-          <Reveal as="h2" className="section__title" delay={80}>{t.map.title}</Reveal>
-          <Reveal as="p" className="section__lead" delay={160}>{t.map.sub}</Reveal>
+          <Reveal as="span" className="eyebrow" variant="down" delay={0}>{t.map.eyebrow}</Reveal>
+          <Reveal as="h2" className="section__title" variant="up" delay={100}>{t.map.title}</Reveal>
+          <Reveal as="p" className="section__lead" variant="up" delay={250}>{t.map.sub}</Reveal>
         </div>
 
         <div className="mapgrid">
-          <Reveal className="mapgrid__focus" variant="left">
+          <Reveal className="mapgrid__focus" variant="left" delay={200}>
             <NinhThuanMap onSelect={focusStory} />
           </Reveal>
-          <Reveal className="mapgrid__national" variant="right" delay={120}>
+          <Reveal className="mapgrid__national" variant="flip" delay={450}>
             <div className="mapgrid__nationalcard">
               <VietnamMap onViewProducts={handleProvince} />
             </div>
@@ -235,41 +241,44 @@ function App() {
       {/* ---------------- 4 · LOCAL INSPIRATIONAL STORIES ---------------- */}
       <section id="stories" className="section section--stories">
         <div className="section__head">
-          <Reveal as="span" className="eyebrow">{t.stories.eyebrow}</Reveal>
-          <Reveal as="h2" className="section__title" delay={80}>{t.stories.title}</Reveal>
-          <Reveal as="p" className="section__lead" delay={160}>{t.stories.sub}</Reveal>
+          <Reveal as="span" className="eyebrow" variant="zoom" delay={0}>{t.stories.eyebrow}</Reveal>
+          <Reveal as="h2" className="section__title" variant="up" delay={120}>{t.stories.title}</Reveal>
+          <Reveal as="p" className="section__lead" variant="up" delay={240}>{t.stories.sub}</Reveal>
         </div>
 
         <div className="storycards">
-          {NINH_THUAN.map((p, i) => (
-            <Reveal
-              key={p.id}
-              id={`story-${p.id}`}
-              className={`storycard ${flashId === p.id ? 'is-flash' : ''}`}
-              variant="zoom"
-              delay={(i % 3) * 90}
-            >
-              <div className="storycard__art" style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}>
-                <span className="storycard__num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="storycard__emoji">{p.emoji}</span>
-                <span className="storycard__soon">{t.stories.soon}</span>
-              </div>
-              <div className="storycard__body">
-                <h3 className="storycard__name">{p.name}</h3>
-                <p className="storycard__producer">{p.producer}</p>
-                <div className="storycard__tags">
-                  {p.tags.map((tag) => (
-                    <span key={tag} className="storycard__tag">{tag}</span>
-                  ))}
+          {NINH_THUAN.map((p, i) => {
+            const variants = ['left', 'up', 'right', 'zoom'] as const
+            return (
+              <Reveal
+                key={p.id}
+                id={`story-${p.id}`}
+                className={`storycard ${flashId === p.id ? 'is-flash' : ''}`}
+                variant={variants[i % variants.length]}
+                delay={300 + (i % 4) * 120}
+              >
+                <div className="storycard__art" style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}>
+                  <span className="storycard__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="storycard__emoji">{p.emoji}</span>
+                  <span className="storycard__soon">{t.stories.soon}</span>
                 </div>
-                <button className="storycard__cta" disabled>
-                  {t.stories.readStory} →
-                </button>
-              </div>
-            </Reveal>
-          ))}
+                <div className="storycard__body">
+                  <h3 className="storycard__name">{p.name}</h3>
+                  <p className="storycard__producer">{p.producer}</p>
+                  <div className="storycard__tags">
+                    {p.tags.map((tag) => (
+                      <span key={tag} className="storycard__tag">{tag}</span>
+                    ))}
+                  </div>
+                  <button className="storycard__cta" disabled>
+                    {t.stories.readStory} →
+                  </button>
+                </div>
+              </Reveal>
+            )
+          })}
         </div>
-        <Reveal as="p" className="storycards__counter">
+        <Reveal as="p" className="storycards__counter" variant="zoom" delay={600}>
           {t.stories.counter(NINH_THUAN.length)}
         </Reveal>
       </section>
@@ -278,24 +287,24 @@ function App() {
       <section id="handbook" className="section section--handbook">
         <div className="handbook">
           <div className="handbook__body">
-            <Reveal as="span" className="eyebrow eyebrow--light">{t.handbook.eyebrow}</Reveal>
-            <Reveal as="h2" className="section__title section__title--light" delay={80}>
+            <Reveal as="span" className="eyebrow eyebrow--light" variant="left" delay={0}>{t.handbook.eyebrow}</Reveal>
+            <Reveal as="h2" className="section__title section__title--light" variant="left" delay={150}>
               {t.handbook.title}
             </Reveal>
             {t.handbook.paragraphs.map((p, i) => (
-              <Reveal as="p" key={i} className="handbook__para" delay={160 + i * 90}>
+              <Reveal as="p" key={i} className="handbook__para" variant="left" delay={300 + i * 150}>
                 {p}
               </Reveal>
             ))}
-            <Reveal className="handbook__skills" delay={340}>
+            <Reveal className="handbook__skills" variant="up" delay={550}>
               {t.handbook.skills.map((s, i) => (
-                <span className="handbook__skill" key={s.label} style={{ transitionDelay: `${i * 60}ms` }}>
+                <Reveal as="span" className="handbook__skill" key={s.label} variant="zoom" delay={650 + i * 100}>
                   <span className="handbook__skill-icon">{s.icon}</span>
                   {s.label}
-                </span>
+                </Reveal>
               ))}
             </Reveal>
-            <Reveal delay={440}>
+            <Reveal variant="up" delay={1050}>
               <button className="btn btn--accent btn--lg">
                 {t.handbook.cta}
                 <span className="btn__arrow">↗</span>
@@ -303,7 +312,7 @@ function App() {
             </Reveal>
           </div>
 
-          <Reveal className="handbook__visual" variant="right">
+          <Reveal className="handbook__visual" variant="flip" delay={200}>
             <div className="handbook__book">
               <div className="handbook__cover">
                 <span className="handbook__cover-icon">📘</span>
@@ -321,26 +330,32 @@ function App() {
       <footer id="connect" className="footer">
         <LeafField />
         <div className="footer__inner">
-          <Reveal as="span" className="eyebrow eyebrow--light">{t.footer.eyebrow}</Reveal>
-          <Reveal as="h2" className="footer__title" delay={80}>{t.footer.title}</Reveal>
-          <Reveal as="p" className="footer__sub" delay={160}>{t.footer.sub}</Reveal>
+          <Reveal as="span" className="eyebrow eyebrow--light" variant="down" delay={0}>{t.footer.eyebrow}</Reveal>
+          <Reveal as="h2" className="footer__title" variant="up" delay={150}>{t.footer.title}</Reveal>
+          <Reveal as="p" className="footer__sub" variant="up" delay={300}>{t.footer.sub}</Reveal>
 
-          <Reveal className="footer__actions" delay={260}>
-            <a className="footer__btn" href="#" onClick={(e) => e.preventDefault()}>
-              <span>🌐</span> {t.footer.social}
-            </a>
-            <a className="footer__btn" href="mailto:hello@viet-farm.org">
-              <span>✉️</span> {t.footer.email}
-            </a>
-            <a className="footer__btn" href="tel:+84000000000">
-              <span>📞</span> {t.footer.phone}
-            </a>
+          <Reveal className="footer__actions" variant="up" delay={450}>
+            <Reveal variant="left" delay={500}>
+              <a className="footer__btn" href="#" onClick={(e) => e.preventDefault()}>
+                <span>🌐</span> {t.footer.social}
+              </a>
+            </Reveal>
+            <Reveal variant="zoom" delay={620}>
+              <a className="footer__btn" href="mailto:hello@viet-farm.org">
+                <span>✉️</span> {t.footer.email}
+              </a>
+            </Reveal>
+            <Reveal variant="right" delay={740}>
+              <a className="footer__btn" href="tel:+84000000000">
+                <span>📞</span> {t.footer.phone}
+              </a>
+            </Reveal>
           </Reveal>
         </div>
-        <div className="footer__bar">
+        <Reveal className="footer__bar" variant="up" delay={900}>
           <span className="footer__brand">🌱 {t.brand.name}</span>
           <small>© {new Date().getFullYear()} · {t.footer.rights}</small>
-        </div>
+        </Reveal>
       </footer>
     </div>
   )
