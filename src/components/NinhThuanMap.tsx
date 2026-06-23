@@ -8,21 +8,19 @@ interface NinhThuanMapProps {
   onSelect: (productId: string) => void
 }
 
-/* Hand-placed hotspot coordinates (% of the panel box). One per delicacy,
- * scattered over the stylised province silhouette. */
-const SPOTS: { top: number; left: number }[] = [
-  { top: 22, left: 30 },
-  { top: 15, left: 55 },
-  { top: 30, left: 72 },
-  { top: 40, left: 44 },
-  { top: 38, left: 20 },
-  { top: 52, left: 63 },
-  { top: 55, left: 33 },
-  { top: 64, left: 50 },
-  { top: 48, left: 80 },
-  { top: 70, left: 70 },
-  { top: 75, left: 40 },
-  { top: 84, left: 56 },
+const SPOTS: { x: number; y: number }[] = [
+  { x: 4700, y: 8270 },
+  { x: 4760, y: 8330 },
+  { x: 4670, y: 8380 },
+  { x: 4830, y: 8410 },
+  { x: 4740, y: 8450 },
+  { x: 4650, y: 8510 },
+  { x: 4790, y: 8530 },
+  { x: 4720, y: 8580 },
+  { x: 4800, y: 8640 },
+  { x: 4730, y: 8700 },
+  { x: 4780, y: 8750 },
+  { x: 4810, y: 8800 },
 ]
 
 export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
@@ -34,9 +32,9 @@ export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
     <div className="ntmap">
       <div className="ntmap__panel">
         {/* decorative province silhouette + sun + rays */}
-        <svg className="ntmap__bg" viewBox="0 0 400 360" aria-hidden="true">
+        <svg className="ntmap__bg" viewBox="4525 8132 558 738">
           <defs>
-            <radialGradient id="ntSun" cx="78%" cy="18%" r="60%">
+            <radialGradient id="ntSun" cx="78%" cy="12%" r="55%">
               <stop offset="0%" stopColor="#ffe9a8" />
               <stop offset="100%" stopColor="#ffe9a8" stopOpacity="0" />
             </radialGradient>
@@ -45,48 +43,57 @@ export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
               <stop offset="100%" stopColor="#7fd8a0" />
             </linearGradient>
           </defs>
-          <rect width="400" height="360" fill="url(#ntSun)" />
-          <circle className="ntmap__sun" cx="312" cy="64" r="30" />
-          <path
-            className="ntmap__land"
-            fill="url(#ntLand)"
-            d="M150 24c40-14 92-6 120 26 26 30 10 64 34 96 20 26 26 58 6 86-22 30-66 38-104 42-44 4-92-2-118-36-24-30-18-72-6-108 10-30 18-72 40-94 8-8 18-12 28-12Z"
-          />
-          {/* coastline dashes */}
-          <path
-            className="ntmap__coast"
-            fill="none"
-            d="M268 50c30 30 12 66 36 100 20 28 26 60 4 88"
-          />
+          <rect x="4525" y="8132" width="558" height="738" fill="url(#ntSun)" />
+          <circle className="ntmap__sun" cx="4980" cy="8220" r="42" />
+          <g className="ntmap__land-group">
+            <path
+              className="ntmap__land"
+              fill="url(#ntLand)"
+              d="M5004 8466L5033 8504L4996 8551L4991 8576L4957 8627L4907 8618L4889 8578L4872 8582L4887 8605L4879 8667L4874 8785L4826 8820L4793 8810L4765 8763L4695 8750L4688 8712L4653 8693L4639 8648L4583 8636L4575 8581L4622 8530L4628 8505L4601 8470L4593 8434L4624 8335L4631 8269L4624 8226L4649 8182L4692 8199L4715 8223L4766 8347L4786 8360L4879 8380L4903 8405L4918 8444L4939 8460L5004 8466Z"
+            />
+            <path
+              className="ntmap__coast"
+              fill="none"
+              d="M5004 8466L5033 8504L4996 8551L4991 8576L4957 8627L4907 8618L4889 8578L4872 8582L4887 8605L4879 8667L4874 8785L4826 8820"
+            />
+            {items.map((p, i) => {
+              const pos = SPOTS[i] ?? { x: 4750, y: 8500 }
+              const isActive = active === i
+              const sz = 46
+              return (
+                <foreignObject
+                  key={p.id}
+                  x={pos.x - sz / 2}
+                  y={pos.y - sz / 2}
+                  width={sz}
+                  height={sz}
+                  overflow="visible"
+                >
+                  <button
+                    type="button"
+                    className={`ntmap__spot ${isActive ? 'is-active' : ''}`}
+                    style={{ animationDelay: `${i * 0.18}s` }}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onMouseLeave={() => setActive((cur) => (cur === i ? null : cur))}
+                    onClick={() => onSelect(p.id)}
+                    aria-label={p.name}
+                  >
+                    <span className="ntmap__pulse" />
+                    <span className="ntmap__dot">{p.emoji}</span>
+                    {isActive && (
+                      <span className="ntmap__pop" role="tooltip">
+                        <span className="ntmap__pop-label">{t.map.quickTitle}</span>
+                        <span className="ntmap__pop-name">{p.name}</span>
+                        <span className="ntmap__pop-cta">{t.map.readStory} →</span>
+                      </span>
+                    )}
+                  </button>
+                </foreignObject>
+              )
+            })}
+          </g>
         </svg>
-
-        {items.map((p, i) => {
-          const pos = SPOTS[i] ?? { top: 50, left: 50 }
-          const isActive = active === i
-          return (
-            <button
-              key={p.id}
-              type="button"
-              className={`ntmap__spot ${isActive ? 'is-active' : ''}`}
-              style={{ top: `${pos.top}%`, left: `${pos.left}%`, animationDelay: `${i * 0.18}s` }}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              onMouseLeave={() => setActive((cur) => (cur === i ? null : cur))}
-              onClick={() => onSelect(p.id)}
-              aria-label={p.name}
-            >
-              <span className="ntmap__pulse" />
-              <span className="ntmap__dot">{p.emoji}</span>
-              {isActive && (
-                <span className="ntmap__pop" role="tooltip">
-                  <span className="ntmap__pop-label">{t.map.quickTitle}</span>
-                  <span className="ntmap__pop-name">{p.name}</span>
-                  <span className="ntmap__pop-cta">{t.map.readStory} →</span>
-                </span>
-              )}
-            </button>
-          )
-        })}
 
         <span className="ntmap__tag">{t.map.region}</span>
       </div>
