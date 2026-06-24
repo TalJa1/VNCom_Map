@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import VietnamMap from './components/VietnamMap'
 import NinhThuanMap from './components/NinhThuanMap'
 import LeafCursor from './components/LeafCursor'
 import Reveal from './components/Reveal'
-import { PRODUCTS } from './data/products'
+import ImageCarousel from './components/ImageCarousel'
+import Marketplace from './components/Marketplace'
+import CartDrawer, { type CartItem } from './components/CartDrawer'
+import { FOUNDER } from './data/founder'
+import { FARMERS, farmerByProductId } from './data/farmers'
+import { PRODUCTS, type Product } from './data/products'
 import { useLang, useT } from './i18n'
 import './App.css'
 
-const NINH_THUAN = PRODUCTS.filter((p) => p.provinceKey === 'vn-nt').slice(0, 12)
+const productById = (id: string) => PRODUCTS.find((p) => p.id === id)
 
 /* Decorative gradient palettes cycled across the story cards. */
 const CARD_GRADIENTS = [
@@ -67,9 +72,41 @@ function LeafField() {
 
 function App() {
   const t = useT()
+  const { lang } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [flashId, setFlashId] = useState<string | null>(null)
+
+  // ---- Marketplace / cart state ----
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [cartOpen, setCartOpen] = useState(false)
+  const [provinceFilter, setProvinceFilter] = useState<string | null>(null)
+  const cartCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart])
+
+  const addToCart = useCallback((p: Product) => {
+    setCart((prev) => {
+      const found = prev.find((i) => i.product.id === p.id)
+      if (found) {
+        return prev.map((i) =>
+          i.product.id === p.id ? { ...i, qty: i.qty + 1 } : i,
+        )
+      }
+      return [...prev, { product: p, qty: 1 }]
+    })
+    setCartOpen(true)
+  }, [])
+
+  const changeQty = useCallback((id: string, delta: number) => {
+    setCart((prev) =>
+      prev.map((i) =>
+        i.product.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i,
+      ),
+    )
+  }, [])
+
+  const removeFromCart = useCallback((id: string) => {
+    setCart((prev) => prev.filter((i) => i.product.id !== id))
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -83,16 +120,22 @@ function App() {
     setMenuOpen(false)
   }, [])
 
-  // From the map: jump to a story card and flash it.
+  // From the map: a delicacy links to the farmer who grows it — jump to that
+  // farmer's story card and flash it.
   const focusStory = useCallback((productId: string) => {
-    const el = document.getElementById(`story-${productId}`)
+    const farmer = farmerByProductId(productId)
+    const targetId = farmer?.id ?? productId
+    const el = document.getElementById(`story-${targetId}`)
     el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    setFlashId(productId)
-    window.setTimeout(() => setFlashId((cur) => (cur === productId ? null : cur)), 1800)
+    setFlashId(targetId)
+    window.setTimeout(() => setFlashId((cur) => (cur === targetId ? null : cur)), 1800)
   }, [])
 
-  // The national map links every province to the Ninh Thuận stories section.
-  const handleProvince = useCallback(() => scrollTo('stories'), [scrollTo])
+  // The national map filters the marketplace by the clicked province.
+  const handleProvince = useCallback((key: string) => {
+    setProvinceFilter(key)
+    scrollTo('shop')
+  }, [scrollTo])
 
   return (
     <div className="app">
@@ -112,11 +155,20 @@ function App() {
           <button onClick={() => scrollTo('story')}>{t.nav.story}</button>
           <button onClick={() => scrollTo('map')}>{t.nav.map}</button>
           <button onClick={() => scrollTo('stories')}>{t.nav.stories}</button>
+          <button onClick={() => scrollTo('shop')}>{t.nav.shop}</button>
           <button onClick={() => scrollTo('handbook')}>{t.nav.handbook}</button>
           <button onClick={() => scrollTo('connect')}>{t.nav.connect}</button>
         </nav>
 
         <div className="nav__right">
+          <button
+            className="nav__cart"
+            onClick={() => setCartOpen(true)}
+            aria-label={t.shop.viewCart}
+          >
+            🛒
+            {cartCount > 0 && <span className="nav__cart-badge">{cartCount}</span>}
+          </button>
           <LangSwitch />
           <button
             className={`nav__burger ${menuOpen ? 'is-open' : ''}`}
@@ -190,8 +242,18 @@ function App() {
         <div className="story">
           <Reveal className="story__media" variant="left" delay={0}>
             <div className="story__photo">
-              <span className="story__photo-emoji">🧑‍🌾</span>
+              <ImageCarousel
+                images={FOUNDER.images}
+                emoji={FOUNDER.emoji}
+                placeholderSlides={FOUNDER.placeholderSlides}
+                label={FOUNDER.name}
+                className="story__carousel"
+              />
               <div className="story__photo-glow" />
+              <span className="story__photo-caption">
+                <strong>{FOUNDER.name}</strong>
+                <small>{FOUNDER.role[lang]}</small>
+              </span>
             </div>
             <Reveal as="blockquote" className="story__pull" variant="up" delay={400}>
               "{t.bigStory.pull}"
@@ -247,26 +309,41 @@ function App() {
         </div>
 
         <div className="storycards">
-          {NINH_THUAN.map((p, i) => {
+          {FARMERS.map((f, i) => {
             const variants = ['left', 'up', 'right', 'zoom'] as const
+            const delicacy = productById(f.productId)
             return (
               <Reveal
-                key={p.id}
-                id={`story-${p.id}`}
-                className={`storycard ${flashId === p.id ? 'is-flash' : ''}`}
+                key={f.id}
+                id={`story-${f.id}`}
+                className={`storycard ${flashId === f.id ? 'is-flash' : ''}`}
                 variant={variants[i % variants.length]}
                 delay={300 + (i % 4) * 120}
               >
-                <div className="storycard__art" style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}>
+                <div
+                  className="storycard__art"
+                  style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}
+                >
                   <span className="storycard__num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="storycard__emoji">{p.emoji}</span>
+                  <ImageCarousel
+                    images={f.images}
+                    emoji={f.emoji}
+                    label={f.name}
+                    className="storycard__carousel"
+                  />
                   <span className="storycard__soon">{t.stories.soon}</span>
                 </div>
                 <div className="storycard__body">
-                  <h3 className="storycard__name">{p.name}</h3>
-                  <p className="storycard__producer">{p.producer}</p>
+                  <h3 className="storycard__name">{f.name}</h3>
+                  <p className="storycard__producer">{f.household} · {f.village}</p>
+                  {delicacy && (
+                    <p className="storycard__delicacy">
+                      <span className="storycard__delicacy-label">{t.stories.delicacy}</span>
+                      {delicacy.emoji} {delicacy.name}
+                    </p>
+                  )}
                   <div className="storycard__tags">
-                    {p.tags.map((tag) => (
+                    {f.tags.map((tag) => (
                       <span key={tag} className="storycard__tag">{tag}</span>
                     ))}
                   </div>
@@ -279,7 +356,23 @@ function App() {
           })}
         </div>
         <Reveal as="p" className="storycards__counter" variant="zoom" delay={600}>
-          {t.stories.counter(NINH_THUAN.length)}
+          {t.stories.counter(FARMERS.length)}
+        </Reveal>
+      </section>
+
+      {/* ---------------- 4b · MARKETPLACE (BUY) ---------------- */}
+      <section id="shop" className="section section--shop">
+        <div className="section__head">
+          <Reveal as="span" className="eyebrow" variant="down" delay={0}>{t.shop.eyebrow}</Reveal>
+          <Reveal as="h2" className="section__title" variant="up" delay={120}>{t.shop.title}</Reveal>
+          <Reveal as="p" className="section__lead" variant="up" delay={240}>{t.shop.sub}</Reveal>
+        </div>
+        <Reveal variant="up" delay={360}>
+          <Marketplace
+            filterProvinceKey={provinceFilter}
+            onClearProvinceFilter={() => setProvinceFilter(null)}
+            onAddToCart={addToCart}
+          />
         </Reveal>
       </section>
 
@@ -357,6 +450,14 @@ function App() {
           <small>© {new Date().getFullYear()} · {t.footer.rights}</small>
         </Reveal>
       </footer>
+
+      <CartDrawer
+        open={cartOpen}
+        items={cart}
+        onClose={() => setCartOpen(false)}
+        onChangeQty={changeQty}
+        onRemove={removeFromCart}
+      />
     </div>
   )
 }

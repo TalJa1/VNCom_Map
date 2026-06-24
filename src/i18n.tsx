@@ -21,6 +21,7 @@ export interface Dict {
     story: string
     map: string
     stories: string
+    shop: string
     handbook: string
     connect: string
   }
@@ -56,7 +57,15 @@ export interface Dict {
     sub: string
     soon: string
     readStory: string
+    delicacy: string
     counter: (n: number) => string
+  }
+  shop: {
+    eyebrow: string
+    title: string
+    sub: string
+    cart: string
+    viewCart: string
   }
   handbook: {
     eyebrow: string
@@ -84,6 +93,7 @@ const en: Dict = {
     story: 'The Story',
     map: 'Farm Map',
     stories: 'Stories',
+    shop: 'Shop',
     handbook: 'Handbook',
     connect: 'Connect',
   },
@@ -124,10 +134,18 @@ const en: Dict = {
   stories: {
     eyebrow: 'Local Inspirational Stories',
     title: 'Faces Behind Every Harvest',
-    sub: 'Designed in the spirit of an awards showcase, these cards will hold the journeys of 12 farming households. The full stories are being gathered during our field survey in Ninh Thuận.',
+    sub: 'Designed in the spirit of an awards showcase, these cards hold the journeys of 12 farming households. The full stories are being gathered during our field survey in Ninh Thuận.',
     soon: 'Story coming soon',
     readStory: 'Read story',
+    delicacy: 'Signature delicacy',
     counter: (n) => `${n} of 12 households`,
+  },
+  shop: {
+    eyebrow: 'Farm-to-Table Marketplace',
+    title: 'Buy Straight from the Farmers',
+    sub: 'Every purchase goes directly to the household that grew it. Browse the harvest, add to your basket, and check out — supporting Vietnam’s farmers with a single tap.',
+    cart: 'Basket',
+    viewCart: 'View basket',
   },
   handbook: {
     eyebrow: 'Social Impact',
@@ -163,6 +181,7 @@ const vi: Dict = {
     story: 'Câu chuyện',
     map: 'Bản đồ',
     stories: 'Nhân vật',
+    shop: 'Gian hàng',
     handbook: 'Cẩm nang',
     connect: 'Kết nối',
   },
@@ -203,10 +222,18 @@ const vi: Dict = {
   stories: {
     eyebrow: 'Câu chuyện nhân vật',
     title: 'Gương mặt sau mỗi mùa gặt',
-    sub: 'Lấy cảm hứng từ format của một lễ trao giải, những tấm thẻ này sẽ lưu giữ hành trình của 12 hộ nông dân. Các câu chuyện đầy đủ đang được thu thập trong chuyến khảo sát thực địa tại Ninh Thuận.',
+    sub: 'Lấy cảm hứng từ format của một lễ trao giải, những tấm thẻ này lưu giữ hành trình của 12 hộ nông dân. Các câu chuyện đầy đủ đang được thu thập trong chuyến khảo sát thực địa tại Ninh Thuận.',
     soon: 'Câu chuyện sắp ra mắt',
     readStory: 'Đọc câu chuyện',
+    delicacy: 'Đặc sản tiêu biểu',
     counter: (n) => `${n} trong 12 hộ`,
+  },
+  shop: {
+    eyebrow: 'Gian hàng nông sản',
+    title: 'Mua trực tiếp từ nhà nông',
+    sub: 'Mỗi đơn hàng đến thẳng tay hộ nông dân đã làm ra sản phẩm. Hãy dạo gian hàng, thêm vào giỏ và thanh toán — đồng hành cùng người nông dân Việt chỉ với một chạm.',
+    cart: 'Giỏ hàng',
+    viewCart: 'Xem giỏ hàng',
   },
   handbook: {
     eyebrow: 'Tác động xã hội',

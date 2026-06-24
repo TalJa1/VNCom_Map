@@ -42,7 +42,11 @@ export default function CartDrawer({
           <ul className="cart__list">
             {items.map(({ product, qty }) => (
               <li key={product.id} className="cart__item">
-                <span className="cart__emoji">{product.emoji}</span>
+                {product.images && product.images.length > 0 ? (
+                  <img src={product.images[0]} alt={product.name} className="cart__thumb" />
+                ) : (
+                  <span className="cart__emoji">{product.emoji}</span>
+                )}
                 <div className="cart__info">
                   <strong>{product.name}</strong>
                   <span className="cart__unitprice">

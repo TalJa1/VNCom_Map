@@ -430,7 +430,8 @@
 }
 .story__stamp {
   position: absolute;
-  top: 16px; left: 16px;
+  top: 16px; right: 16px;
+  z-index: 4;
   background: rgba(255,255,255,0.92);
   color: var(--green-d);
   font-weight: 800;
@@ -676,6 +677,102 @@
 }
 .footer__brand { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: #fff; }
 .footer__bar small { color: #8fc7a3; font-size: 0.82rem; }
+
+/* ============ NAV CART BUTTON ============ */
+.nav__cart {
+  position: relative;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(46, 139, 87, 0.25);
+  background: rgba(46, 139, 87, 0.12);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav__cart:hover { background: rgba(46, 139, 87, 0.2); transform: translateY(-2px); }
+.nav__cart-badge {
+  position: absolute;
+  top: -6px; right: -6px;
+  min-width: 19px; height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--gold, #f4c430);
+  color: #5a3d00;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ============ BIG STORY · FOUNDER CAROUSEL ============ */
+.story__photo .carousel,
+.story__photo .carousel__viewport {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  border-radius: 28px;
+}
+.story__photo .carousel__dots {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  justify-content: flex-start;
+  z-index: 4;
+}
+.story__photo .carousel__dot { background: rgba(255,255,255,0.55); }
+.story__photo .carousel__dot.is-active { background: #fff; }
+.story__photo-caption {
+  position: absolute;
+  left: 16px; top: 16px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0,0,0,0.42);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 14px;
+  max-width: 58%;
+}
+.story__photo-caption strong { font-size: 0.95rem; }
+.story__photo-caption small { font-size: 0.72rem; opacity: 0.85; }
+
+/* ============ STORY CARD · FARMER CAROUSEL ============ */
+.storycard__art .carousel,
+.storycard__art .carousel__viewport {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+.storycard__art .carousel__dots {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 8px;
+  z-index: 2;
+}
+.storycard__art .carousel__emoji { font-size: 3.6rem; }
+.storycard__delicacy {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--green-d);
+  margin-top: -2px;
+}
+.storycard__delicacy-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ============ 4b · MARKETPLACE / SHOP ============ */
+.section--shop { background: var(--bg-soft); max-width: none; }
+.section--shop > * { max-width: 1240px; margin-left: auto; margin-right: auto; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 960px) {

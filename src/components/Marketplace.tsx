@@ -75,7 +75,13 @@ export default function Marketplace({
         <div className="market__grid">
           {filtered.map((p) => (
             <article key={p.id} className="pcard">
-              <div className="pcard__media">{p.emoji}</div>
+              <div className="pcard__media">
+                {p.images && p.images.length > 0 ? (
+                  <img src={p.images[0]} alt={p.name} className="pcard__img" />
+                ) : (
+                  <span className="pcard__emoji">{p.emoji}</span>
+                )}
+              </div>
               <div className="pcard__body">
                 <div className="pcard__top">
                   <h3 className="pcard__name">{p.name}</h3>

@@ -78,6 +78,13 @@
   font-size: 1.8rem;
   flex-shrink: 0;
 }
+.cart__thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 
 .cart__info {
   flex: 1;
