@@ -367,13 +367,11 @@ function App() {
           <Reveal as="h2" className="section__title" variant="up" delay={120}>{t.shop.title}</Reveal>
           <Reveal as="p" className="section__lead" variant="up" delay={240}>{t.shop.sub}</Reveal>
         </div>
-        <Reveal variant="up" delay={360}>
-          <Marketplace
-            filterProvinceKey={provinceFilter}
-            onClearProvinceFilter={() => setProvinceFilter(null)}
-            onAddToCart={addToCart}
-          />
-        </Reveal>
+        <Marketplace
+          filterProvinceKey={provinceFilter}
+          onClearProvinceFilter={() => setProvinceFilter(null)}
+          onAddToCart={addToCart}
+        />
       </section>
 
       {/* ---------------- 5 · DIGITAL HANDBOOK ---------------- */}

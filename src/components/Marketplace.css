@@ -203,3 +203,33 @@
 }
 .pcard__buy:hover { background: #14532d; }
 .pcard__buy:active { transform: scale(0.96); }
+
+.market__pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.market__count {
+  font-size: 0.88rem;
+  color: #5b7a64;
+  font-weight: 500;
+}
+
+.market__loadmore {
+  border: 2px solid #2e8b57;
+  background: transparent;
+  color: #2e8b57;
+  padding: 12px 32px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.market__loadmore:hover {
+  background: #2e8b57;
+  color: #fff;
+}
