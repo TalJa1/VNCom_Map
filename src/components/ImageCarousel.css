@@ -1,13 +1,12 @@
-.carousel {
+.cardstack {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   width: 100%;
 }
 
-.carousel__viewport {
+.cardstack__area {
   position: relative;
-  overflow: hidden;
   width: 100%;
   height: 100%;
   border-radius: inherit;
@@ -15,28 +14,21 @@
   user-select: none;
 }
 
-.carousel__track {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
-}
-
-.carousel__track:not(.is-dragging) {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.carousel__slide {
-  position: relative;
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
+.cardstack__card {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   overflow: hidden;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
 }
 
-.carousel__slide img {
+.cardstack__card--animate {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.35s ease;
+}
+
+.cardstack__card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -44,21 +36,25 @@
   pointer-events: none;
 }
 
-.carousel__emoji {
+.cardstack__emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   font-size: clamp(3.5rem, 12vw, 7rem);
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
   pointer-events: none;
 }
 
-/* Dots (position indicators only — drag to change slides) */
-.carousel__dots {
+.cardstack__dots {
   display: flex;
   justify-content: center;
   gap: 0.45rem;
   pointer-events: none;
 }
 
-.carousel__dot {
+.cardstack__dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -66,7 +62,7 @@
   transition: transform 0.2s, background 0.2s;
 }
 
-.carousel__dot.is-active {
+.cardstack__dot.is-active {
   background: #1f7a4d;
   transform: scale(1.35);
 }

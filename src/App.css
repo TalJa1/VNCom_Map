@@ -708,22 +708,22 @@
 }
 
 /* ============ BIG STORY · FOUNDER CAROUSEL ============ */
-.story__photo .carousel,
-.story__photo .carousel__viewport {
+.story__photo .cardstack,
+.story__photo .cardstack__area {
   position: absolute;
   inset: 0;
   height: 100%;
   border-radius: 28px;
 }
-.story__photo .carousel__dots {
+.story__photo .cardstack__dots {
   position: absolute;
   left: 18px;
   bottom: 16px;
   justify-content: flex-start;
   z-index: 4;
 }
-.story__photo .carousel__dot { background: rgba(255,255,255,0.55); }
-.story__photo .carousel__dot.is-active { background: #fff; }
+.story__photo .cardstack__dot { background: rgba(255,255,255,0.55); }
+.story__photo .cardstack__dot.is-active { background: #fff; }
 .story__photo-caption {
   position: absolute;
   left: 16px; top: 16px;
@@ -741,19 +741,19 @@
 .story__photo-caption small { font-size: 0.72rem; opacity: 0.85; }
 
 /* ============ STORY CARD · FARMER CAROUSEL ============ */
-.storycard__art .carousel,
-.storycard__art .carousel__viewport {
+.storycard__art .cardstack,
+.storycard__art .cardstack__area {
   position: absolute;
   inset: 0;
   height: 100%;
 }
-.storycard__art .carousel__dots {
+.storycard__art .cardstack__dots {
   position: absolute;
   left: 0; right: 0;
   bottom: 8px;
   z-index: 2;
 }
-.storycard__art .carousel__emoji { font-size: 3.6rem; }
+.storycard__art .cardstack__emoji { font-size: 3.6rem; }
 .storycard__delicacy {
   display: flex;
   flex-direction: column;
