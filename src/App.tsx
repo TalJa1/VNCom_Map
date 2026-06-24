@@ -10,6 +10,7 @@ import { FOUNDER } from './data/founder'
 import { FARMERS, farmerByProductId } from './data/farmers'
 import { PRODUCTS, type Product } from './data/products'
 import { useLang, useT } from './i18n'
+import logoImg from './assets/logo.png'
 import './App.css'
 
 const productById = (id: string) => PRODUCTS.find((p) => p.id === id)
@@ -143,7 +144,7 @@ function App() {
       {/* ---------------- NAV ---------------- */}
       <header className={`nav ${scrolled ? 'nav--solid' : ''}`}>
         <button className="nav__brand" onClick={() => scrollTo('gioi-thieu')}>
-          <span className="nav__logo">🌱</span>
+          <img src={logoImg} alt={t.brand.name} className="nav__logo-img" />
           <span className="nav__brandtext">
             <strong>{t.brand.name}</strong>
             <small>{t.brand.tagline}</small>
@@ -231,10 +232,6 @@ function App() {
           </Reveal>
         </div>
 
-        <button className="hero__scroll" onClick={() => scrollTo('story')}>
-          <span>{t.hero.scroll}</span>
-          <span className="hero__scroll-mouse"><i /></span>
-        </button>
       </section>
 
       {/* ---------------- 2 · THE BIG STORY ---------------- */}
