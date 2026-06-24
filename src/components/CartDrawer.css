@@ -171,3 +171,132 @@
   background: #b9d4c0;
   cursor: not-allowed;
 }
+
+/* ---- Success Dialog ---- */
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 40, 25, 0);
+  backdrop-filter: blur(0);
+  transition: background 0.4s, backdrop-filter 0.4s;
+  pointer-events: none;
+}
+.success-overlay.is-visible {
+  background: rgba(15, 40, 25, 0.5);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+.success-dialog {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 36px 32px;
+  text-align: center;
+  max-width: 360px;
+  width: 90vw;
+  box-shadow: 0 24px 80px rgba(16, 80, 40, 0.25);
+  transform: scale(0.6) translateY(30px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+.success-overlay.is-visible .success-dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.success-check {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+}
+.success-check__svg {
+  width: 100%;
+  height: 100%;
+}
+.success-check__circle {
+  stroke: #2e8b57;
+  stroke-width: 2.5;
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  stroke-linecap: round;
+}
+.success-overlay.is-visible .success-check__circle {
+  animation: checkCircle 0.6s 0.2s ease forwards;
+}
+.success-check__tick {
+  stroke: #2e8b57;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+.success-overlay.is-visible .success-check__tick {
+  animation: checkTick 0.4s 0.65s ease forwards;
+}
+
+@keyframes checkCircle {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes checkTick {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-title {
+  color: #14532d;
+  font-size: 1.35rem;
+  margin: 0 0 6px;
+}
+.success-amount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #b45309;
+  margin: 8px 0 12px;
+}
+.success-msg {
+  color: #5b7a64;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+.success-btn {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #2e8b57, #14532d);
+  color: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(46, 139, 87, 0.3);
+}
+.success-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(46, 139, 87, 0.4);
+}
+
+/* ---- Confetti ---- */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 201;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
