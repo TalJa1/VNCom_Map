@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react'
 import './LeafCursor.css'
 
-const LEAVES = ['🍃', '🌿', '🍂', '🌱', '🍃']
 const TRAIL_COUNT = 5
 
 export default function LeafCursor() {
   const branchRef = useRef<HTMLDivElement>(null)
-  const trailRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const trailRefs = useRef<(HTMLDivElement | null)[]>([])
   const mouse = useRef({ x: -100, y: -100 })
   const positions = useRef(
     Array.from({ length: TRAIL_COUNT }, () => ({ x: -100, y: -100 }))
@@ -46,8 +45,8 @@ export default function LeafCursor() {
 
         const el = trailRefs.current[i]
         if (el) {
-          el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${Math.sin(Date.now() * 0.002 + i) * 15}deg) scale(${0.5 + opacity * 0.5})`
-          el.style.opacity = `${Math.max(0, opacity)}`
+          el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${Math.sin(Date.now() * 0.002 + i) * 15}deg) scale(${0.35 + opacity * 0.35})`
+          el.style.opacity = `${Math.max(0, opacity * 0.6)}`
         }
       }
 
@@ -65,16 +64,17 @@ export default function LeafCursor() {
 
   return (
     <div className="leafcursor" aria-hidden="true">
-      <div className="leafcursor__branch" ref={branchRef}>🪴</div>
+      <div className="leafcursor__branch" ref={branchRef}>
+        <img src="/branch-cursor.svg" alt="" width="32" height="32" draggable={false} />
+      </div>
       {Array.from({ length: TRAIL_COUNT }, (_, i) => (
-        <span
+        <div
           key={i}
           className="leafcursor__leaf"
           ref={(el) => { trailRefs.current[i] = el }}
-          style={{ fontSize: `${1 - i * 0.08}rem` }}
         >
-          {LEAVES[i % LEAVES.length]}
-        </span>
+          <img src="/branch-cursor-small.svg" alt="" width={20 - i * 2} height={20 - i * 2} draggable={false} />
+        </div>
       ))}
     </div>
   )

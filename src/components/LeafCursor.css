@@ -10,11 +10,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 1.4rem;
   will-change: transform;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-  margin-left: -12px;
-  margin-top: -14px;
+  margin-left: -4px;
+  margin-top: -2px;
+}
+
+.leafcursor__branch img {
+  display: block;
 }
 
 .leafcursor__leaf {
@@ -26,6 +29,10 @@
   margin-left: -8px;
   margin-top: -8px;
   transition: opacity 0.3s;
+}
+
+.leafcursor__leaf img {
+  display: block;
 }
 
 @media (pointer: coarse) {
