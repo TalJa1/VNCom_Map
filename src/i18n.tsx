@@ -75,6 +75,15 @@ export interface Dict {
     pages: string
     skills: { icon: string; label: string }[]
   }
+  farmerStory: {
+    back: string
+    quote: string
+    delicacy: string
+    tags: string
+    story: string
+    storyComing: string
+    gallery: string
+  }
   footer: {
     eyebrow: string
     title: string
@@ -163,6 +172,15 @@ const en: Dict = {
       { icon: '🔳', label: 'Managing the QR Code system' },
     ],
   },
+  farmerStory: {
+    back: 'Back',
+    quote: 'Quote',
+    delicacy: 'Signature Delicacy',
+    tags: 'Tags',
+    story: 'Story',
+    storyComing: 'Full story content coming soon...',
+    gallery: 'Gallery',
+  },
   footer: {
     eyebrow: 'Footer & Connect',
     title: 'Grow With Us. Sustain the Heritage.',
@@ -250,6 +268,15 @@ const vi: Dict = {
       { icon: '💬', label: 'Chăm sóc khách hàng qua Zalo' },
       { icon: '🔳', label: 'Quản lý hệ thống mã QR' },
     ],
+  },
+  farmerStory: {
+    back: 'Quay lại',
+    quote: 'Lời tâm sự',
+    delicacy: 'Đặc sản tiêu biểu',
+    tags: 'Từ khóa',
+    story: 'Câu chuyện',
+    storyComing: 'Nội dung câu chuyện đầy đủ sắp ra mắt...',
+    gallery: 'Thư viện ảnh',
   },
   footer: {
     eyebrow: 'Chân trang tổng hợp',

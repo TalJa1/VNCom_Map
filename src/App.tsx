@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import VietnamMap from './components/VietnamMap'
 import NinhThuanMap from './components/NinhThuanMap'
 import LeafCursor from './components/LeafCursor'
@@ -328,7 +329,6 @@ function App() {
                     label={f.name}
                     className="storycard__carousel"
                   />
-                  <span className="storycard__soon">{t.stories.soon}</span>
                 </div>
                 <div className="storycard__body">
                   <h3 className="storycard__name">{f.name}</h3>
@@ -344,9 +344,9 @@ function App() {
                       <span key={tag} className="storycard__tag">{tag}</span>
                     ))}
                   </div>
-                  <button className="storycard__cta" disabled>
+                  <Link to={`/farmer/${f.id}`} className="storycard__cta">
                     {t.stories.readStory} →
-                  </button>
+                  </Link>
                 </div>
               </Reveal>
             )

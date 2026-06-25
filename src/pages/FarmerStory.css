@@ -1,0 +1,173 @@
+.farmer-story {
+  min-height: 100vh;
+  background: #faf9f6;
+}
+
+.farmer-story__hero {
+  position: relative;
+  padding: 3rem 2rem 4rem;
+  color: #fff;
+  text-align: center;
+}
+
+.farmer-story__back {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.farmer-story__back:hover {
+  opacity: 1;
+}
+
+.farmer-story__hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.farmer-story__emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.farmer-story__name {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.farmer-story__location {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.farmer-story__container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.farmer-story__section {
+  margin-bottom: 2.5rem;
+}
+
+.farmer-story__section h2 {
+  font-size: 1.25rem;
+  color: #1f7a4d;
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.farmer-story__quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #444;
+  border-left: 4px solid #1f7a4d;
+  padding: 1rem 1.5rem;
+  margin: 0;
+  background: #f0f7f2;
+  border-radius: 0 8px 8px 0;
+}
+
+.farmer-story__delicacy-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.farmer-story__delicacy-emoji {
+  font-size: 2.5rem;
+}
+
+.farmer-story__delicacy-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+.farmer-story__delicacy-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.farmer-story__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.farmer-story__tag {
+  background: #e6f4ea;
+  color: #1f7a4d;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.farmer-story__coming {
+  color: #999;
+  font-style: italic;
+}
+
+.farmer-story__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.farmer-story__skeleton-line {
+  height: 14px;
+  background: #eee;
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.farmer-story__gallery-placeholder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.farmer-story__gallery-item {
+  aspect-ratio: 1;
+  background: #eee;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #ccc;
+}
+
+@media (max-width: 600px) {
+  .farmer-story__hero {
+    padding: 2rem 1rem 3rem;
+  }
+  .farmer-story__name {
+    font-size: 1.5rem;
+  }
+  .farmer-story__container {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .farmer-story__gallery-placeholder {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

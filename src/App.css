@@ -514,19 +514,6 @@
   z-index: 1;
 }
 .storycard:hover .storycard__emoji { transform: scale(1.16) rotate(-5deg); }
-.storycard__soon {
-  position: absolute;
-  bottom: 12px; left: 14px;
-  z-index: 1;
-  background: rgba(255,255,255,0.92);
-  color: var(--green-d);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 5px 11px;
-  border-radius: 999px;
-}
 .storycard__body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; }
 .storycard__name { font-size: 1.1rem; font-weight: 800; }
 .storycard__producer { color: var(--muted); font-size: 0.85rem; margin-top: -2px; }
@@ -547,9 +534,13 @@
   color: var(--green);
   font-weight: 800;
   font-size: 0.9rem;
-  cursor: not-allowed;
-  opacity: 0.65;
+  cursor: pointer;
+  text-decoration: none;
   padding: 0;
+  transition: opacity 0.2s;
+}
+.storycard__cta:hover {
+  opacity: 0.7;
 }
 .storycards__counter {
   text-align: center;
