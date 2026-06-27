@@ -98,7 +98,7 @@ export default function ImageCarousel({
         {visibleCards
           .slice(0, 3)
           .reverse()
-          .map((cardIdx, stackPos) => {
+          .map((cardIdx, _stackPos) => {
             const depth = visibleCards.indexOf(cardIdx)
             const isTop = cardIdx === topIndex
             const x = isTop && dragging ? dragX : 0

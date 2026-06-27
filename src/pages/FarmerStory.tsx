@@ -57,7 +57,7 @@ export default function FarmerStory() {
               <span className="farmer-story__delicacy-emoji">{delicacy.emoji}</span>
               <div>
                 <h3>{delicacy.name}</h3>
-                <p>{delicacy.desc}</p>
+                <p>{delicacy.producer}</p>
               </div>
             </div>
           </section>
