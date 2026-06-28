@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { FARMERS } from '../data/farmers'
 import { PRODUCTS } from '../data/products'
-import { useT } from '../i18n'
+import { useT, useLang } from '../i18n'
 import './FarmerStory.css'
 
 const CARD_GRADIENTS = [
@@ -16,6 +16,7 @@ const CARD_GRADIENTS = [
 export default function FarmerStory() {
   const { id } = useParams<{ id: string }>()
   const t = useT()
+  const { lang } = useLang()
   const farmerIndex = FARMERS.findIndex((f) => f.id === id)
   const farmer = FARMERS[farmerIndex]
 
@@ -72,20 +73,14 @@ export default function FarmerStory() {
           </div>
         </section>
 
-        <section className="farmer-story__section farmer-story__placeholder">
+        <section className="farmer-story__section">
           <h2>{t.farmerStory.story}</h2>
-          <p className="farmer-story__coming">{t.farmerStory.storyComing}</p>
-          <div className="farmer-story__skeleton">
-            <div className="farmer-story__skeleton-line" style={{ width: '100%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '90%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '95%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '60%' }} />
-          </div>
-          <div className="farmer-story__skeleton">
-            <div className="farmer-story__skeleton-line" style={{ width: '100%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '85%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '92%' }} />
-            <div className="farmer-story__skeleton-line" style={{ width: '70%' }} />
+          <div className="farmer-story__text">
+            {(lang === 'vi' ? farmer.storyVi : farmer.storyEn)
+              .split('\n\n')
+              .map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
           </div>
         </section>
 

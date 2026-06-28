@@ -116,28 +116,17 @@
   font-weight: 500;
 }
 
-.farmer-story__coming {
-  color: #999;
-  font-style: italic;
+.farmer-story__text {
+  line-height: 1.8;
+  color: #333;
 }
 
-.farmer-story__skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 1rem;
+.farmer-story__text p {
+  margin-bottom: 1rem;
 }
 
-.farmer-story__skeleton-line {
-  height: 14px;
-  background: #eee;
-  border-radius: 4px;
-  animation: skeleton-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes skeleton-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+.farmer-story__text p:last-child {
+  margin-bottom: 0;
 }
 
 .farmer-story__gallery-placeholder {
