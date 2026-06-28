@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import './ImageCarousel.css'
 
 interface ImageCarouselProps {
@@ -24,6 +24,11 @@ export default function ImageCarousel({
   const [dismissed, setDismissed] = useState<number[]>([])
   const [dragX, setDragX] = useState(0)
   const [dragging, setDragging] = useState(false)
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+
+  const onImageLoad = useCallback((idx: number) => {
+    setLoadedImages((prev) => new Set(prev).add(idx))
+  }, [])
 
   const containerRef = useRef<HTMLDivElement>(null)
   const startX = useRef(0)
@@ -117,11 +122,20 @@ export default function ImageCarousel({
                 }}
               >
                 {hasImages ? (
-                  <img
-                    src={images![cardIdx]}
-                    alt={label ? `${label} ${cardIdx + 1}` : ''}
-                    draggable={false}
-                  />
+                  <>
+                    {!loadedImages.has(cardIdx) && (
+                      <div className="cardstack__shimmer">
+                        <div className="cardstack__shimmer-wave" />
+                      </div>
+                    )}
+                    <img
+                      src={images![cardIdx]}
+                      alt={label ? `${label} ${cardIdx + 1}` : ''}
+                      draggable={false}
+                      onLoad={() => onImageLoad(cardIdx)}
+                      style={{ opacity: loadedImages.has(cardIdx) ? 1 : 0 }}
+                    />
+                  </>
                 ) : (
                   <span className="cardstack__emoji">{emoji}</span>
                 )}

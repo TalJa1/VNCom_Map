@@ -1,0 +1,115 @@
+.founder-photo {
+  position: relative;
+}
+
+.founder-photo__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1f7a4d, #6fcf97 70%, #d8e84a);
+  box-shadow: 0 40px 80px -34px rgba(16, 80, 40, 0.65);
+}
+
+.founder-photo__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.founder-photo__slide.is-active {
+  opacity: 1;
+}
+
+.founder-photo__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.4s ease;
+}
+
+.founder-photo__shimmer {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.founder-photo__shimmer-wave {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: founder-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes founder-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.founder-photo__dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.founder-photo__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.founder-photo__dot.is-active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+.founder-photo__emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 5rem;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.2));
+}
+
+.founder-photo__caption {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 14px;
+  max-width: 58%;
+}
+
+.founder-photo__caption strong {
+  font-size: 0.95rem;
+}
+
+.founder-photo__caption small {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}

@@ -5,9 +5,9 @@ import NinhThuanMap from './components/NinhThuanMap'
 import LeafCursor from './components/LeafCursor'
 import Reveal from './components/Reveal'
 import ImageCarousel from './components/ImageCarousel'
+import FounderPhoto from './components/FounderPhoto'
 import Marketplace from './components/Marketplace'
 import CartDrawer, { type CartItem } from './components/CartDrawer'
-import { FOUNDER } from './data/founder'
 import { FARMERS, farmerByProductId } from './data/farmers'
 import { PRODUCTS, type Product } from './data/products'
 import { useLang, useT } from './i18n'
@@ -74,7 +74,6 @@ function LeafField() {
 
 function App() {
   const t = useT()
-  const { lang } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [flashId, setFlashId] = useState<string | null>(null)
@@ -239,20 +238,7 @@ function App() {
       <section id="story" className="section section--story">
         <div className="story">
           <Reveal className="story__media" variant="left" delay={0}>
-            <div className="story__photo">
-              <ImageCarousel
-                images={FOUNDER.images}
-                emoji={FOUNDER.emoji}
-                placeholderSlides={FOUNDER.placeholderSlides}
-                label={FOUNDER.name}
-                className="story__carousel"
-              />
-              <div className="story__photo-glow" />
-              <span className="story__photo-caption">
-                <strong>{FOUNDER.name}</strong>
-                <small>{FOUNDER.role[lang]}</small>
-              </span>
-            </div>
+            <FounderPhoto />
             <Reveal as="blockquote" className="story__pull" variant="up" delay={400}>
               "{t.bigStory.pull}"
             </Reveal>

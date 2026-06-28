@@ -1,3 +1,13 @@
+const BUCKET = 'main-ada2c.firebasestorage.app'
+
+function storageUrl(path: string): string {
+  return `https://firebasestorage.googleapis.com/v0/b/${BUCKET}/o/${encodeURIComponent(path)}?alt=media`
+}
+
+function farmerImages(farmerId: string, filenames: string[]): string[] {
+  return filenames.map((f) => storageUrl(`farmers/${farmerId}/${f}`))
+}
+
 export interface Farmer {
   id: string
   name: string
@@ -19,7 +29,7 @@ export const FARMERS: Farmer[] = [
     household: 'Chang Chang Farm',
     village: 'Ninh Thuận',
     emoji: '👩‍🌾',
-    images: [],
+    images: farmerImages('f1', ['DSC00609.JPG', 'DSC00611.JPG', 'DSC00612.JPG', 'DSC00613.JPG']),
     tags: ['Nho', 'Táo', '35 năm truyền thống'],
     quote: 'Mỗi địa phương đều có một hương vị riêng. Điều quan trọng là làm sao để người tiêu dùng được biết đến và trải nghiệm đúng hương vị chính gốc của vùng đất đó.',
     productId: 'p10',
@@ -48,7 +58,7 @@ Giữa áp lực cạnh tranh với trái cây nhập khẩu giá rẻ, Chang Ch
     household: 'Nông hộ Anh Hoàng',
     village: 'Ninh Thuận',
     emoji: '🧑‍🌾',
-    images: [],
+    images: farmerImages('f2', ['DSC00618.JPG', 'DSC00619.JPG', 'DSC00620.JPG', 'DSC00621.JPG']),
     tags: ['Nho', '20+ năm kinh nghiệm'],
     quote: 'Điều tôi mong muốn là sản phẩm được kể bằng câu chuyện về sự uy tín, quy trình trồng chuyên nghiệp và chất lượng ổn định để du khách, khách hàng trong và ngoài nước thêm tin tưởng.',
     productId: 'p10',
@@ -81,7 +91,7 @@ Trước sự cạnh tranh của trái cây nhập khẩu, đặc biệt là tr�
     household: 'Nông hộ Anh Mân',
     village: 'Ninh Thuận',
     emoji: '🧑‍🌾',
-    images: [],
+    images: farmerImages('f3', ['DSC00624.JPG', 'DSC00625.JPG', 'DSC00626.JPG', 'DSC00627.JPG']),
     tags: ['Chanh dây', 'Thí điểm', '33 tuổi'],
     quote: 'Tôi mong mô hình chanh dây có thể được nhân rộng trước, từ đó tăng độ nhận diện cho sản phẩm và mở ra hướng phát triển mới cho nông nghiệp địa phương.',
     productId: 'p10m',
@@ -114,7 +124,7 @@ Trong quá trình canh tác, anh Mân đã bước đầu áp dụng một số 
     household: 'Hộ trồng táo',
     village: 'Ninh Thuận',
     emoji: '👩‍🌾',
-    images: [],
+    images: farmerImages('f4', ['DSC00636.JPG', 'DSC00637.JPG', 'DSC00638.JPG', 'DSC00640.JPG']),
     tags: ['Táo', '5 năm kinh nghiệm'],
     quote: 'Tôi mong sản phẩm táo của gia đình có thể tiếp cận tốt hơn với các sàn thương mại điện tử, từ đó mở rộng đầu ra và tăng doanh số cho nông sản địa phương.',
     productId: 'p10b',
@@ -147,7 +157,7 @@ Trong canh tác, hộ của cô Như hiện chưa áp dụng nhiều công ngh�
     household: 'Nông hộ Chú Tín',
     village: 'Ninh Thuận',
     emoji: '🧑‍🌾',
-    images: [],
+    images: farmerImages('f5', ['DSC00644.JPG', 'DSC00647.JPG', 'DSC00648.JPG', 'DSC00649.JPG']),
     tags: ['Táo', '56 tuổi', '3 năm kinh nghiệm'],
     quote: 'Tôi mong người tiêu dùng biết đến vườn táo xanh, sạch, ngọt, được chăm sóc kỹ càng và có thể tiếp cận được nhiều khách hàng hơn.',
     productId: 'p10b',
@@ -184,7 +194,7 @@ Trong canh tác, chú Tín chưa áp dụng nhiều công nghệ hiện đại, 
     household: 'Nông hộ Cô Xéo',
     village: 'Ninh Thuận',
     emoji: '👩‍🌾',
-    images: [],
+    images: farmerImages('f6', ['DSC00655.JPG', 'DSC00656.JPG', 'DSC00657.JPG', 'DSC00658.JPG']),
     tags: ['Măng tây xanh', '8 năm kinh nghiệm', 'Tuần hoàn'],
     quote: 'Tôi muốn mọi người biết đến măng tây xanh được trồng theo mô hình tuần hoàn, sạch và an toàn. Tôi làm bằng cái tâm để mang đến thực phẩm tốt cho sức khỏe và tạo công ăn việc làm ổn định cho những người lao động có hoàn cảnh khó khăn.',
     productId: 'p10l',
@@ -217,7 +227,7 @@ Những năm gần đây, cô Xéo từng bước thay đổi phương pháp can
     household: 'Nông hộ Kiều Văn Toản',
     village: 'Ninh Thuận',
     emoji: '🧑‍🌾',
-    images: [],
+    images: farmerImages('f7', ['DSC00662.JPG', 'DSC00663.JPG', 'DSC00664.JPG', 'DSC00665.JPG']),
     tags: ['Đậu phộng', '56 tuổi', 'Hữu cơ'],
     quote: 'Tôi muốn mọi người biết rằng đậu phộng của gia đình được trồng theo mô hình sạch, dùng phân hữu cơ, thuốc sinh học và không dùng chất độc hại, để không ảnh hưởng đến sức khỏe con người.',
     productId: 'p10n',
@@ -250,7 +260,7 @@ Trong canh tác, chú Toản chú trọng cải thiện chất lượng đất b
     household: 'Nông hộ Anh Tứ',
     village: 'Ninh Thuận',
     emoji: '🧑‍🌾',
-    images: [],
+    images: farmerImages('f8', ['DSC00669.JPG', 'DSC00670.JPG', 'DSC00671.JPG', 'DSC00672.JPG']),
     tags: ['Dừa', '35 tuổi', '5-6 năm kinh nghiệm'],
     quote: 'Tôi muốn mọi người biết đến dừa Ninh Thuận là loại nông sản tươi mát, sạch sẽ, được chăm sóc theo quy trình nông sản sạch.',
     productId: 'p10o',
@@ -287,7 +297,7 @@ Trong canh tác, gia đình anh đã áp dụng hệ thống tưới tiết ki�
     household: 'Nông hộ Chị Trâm',
     village: 'Ninh Thuận',
     emoji: '👩‍🌾',
-    images: [],
+    images: farmerImages('f9', ['DSC00676.JPG', 'DSC00677.JPG', 'DSC00678.JPG', 'DSC00679.JPG']),
     tags: ['Nho Mẫu Đơn', 'Nho sữa Hàn Quốc', '30 tuổi'],
     quote: 'Tôi muốn nhiều khách hàng biết đến nho sạch, được chăm bón kỹ càng bởi những người trẻ và thấy rằng ở Ninh Thuận vẫn có thể trồng được những giống nho đặc biệt.',
     productId: 'p10',

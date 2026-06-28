@@ -34,6 +34,31 @@
   object-fit: cover;
   display: block;
   pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.cardstack__shimmer {
+  position: absolute;
+  inset: 0;
+  background: #e8e8e8;
+  overflow: hidden;
+}
+
+.cardstack__shimmer-wave {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  animation: shimmer-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .cardstack__emoji {

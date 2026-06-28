@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { FARMERS } from '../data/farmers'
 import { PRODUCTS } from '../data/products'
@@ -19,6 +20,8 @@ export default function FarmerStory() {
   const { lang } = useLang()
   const farmerIndex = FARMERS.findIndex((f) => f.id === id)
   const farmer = FARMERS[farmerIndex]
+  const [loadedImgs, setLoadedImgs] = useState<Set<number>>(new Set())
+  const markLoaded = (i: number) => setLoadedImgs((s) => new Set(s).add(i))
 
   if (!farmer) {
     return (
@@ -39,7 +42,14 @@ export default function FarmerStory() {
       <div className="farmer-story__hero" style={{ background: gradient }}>
         <Link to="/" className="farmer-story__back">← {t.farmerStory.back}</Link>
         <div className="farmer-story__hero-content">
-          <span className="farmer-story__emoji">{farmer.emoji}</span>
+          {farmer.images.length > 0 ? (
+            <div className="farmer-story__avatar-wrap">
+              {!loadedImgs.has(-1) && <div className="farmer-story__avatar-shimmer"><div className="shimmer-wave" /></div>}
+              <img src={farmer.images[0]} alt={farmer.name} className="farmer-story__avatar" onLoad={() => markLoaded(-1)} style={{ opacity: loadedImgs.has(-1) ? 1 : 0 }} />
+            </div>
+          ) : (
+            <span className="farmer-story__emoji">{farmer.emoji}</span>
+          )}
           <h1 className="farmer-story__name">{farmer.name}</h1>
           <p className="farmer-story__location">{farmer.household} · {farmer.village}</p>
         </div>
@@ -84,14 +94,19 @@ export default function FarmerStory() {
           </div>
         </section>
 
-        <section className="farmer-story__section farmer-story__placeholder">
-          <h2>{t.farmerStory.gallery}</h2>
-          <div className="farmer-story__gallery-placeholder">
-            <div className="farmer-story__gallery-item">📷</div>
-            <div className="farmer-story__gallery-item">📷</div>
-            <div className="farmer-story__gallery-item">📷</div>
-          </div>
-        </section>
+        {farmer.images.length > 0 && (
+          <section className="farmer-story__section">
+            <h2>{t.farmerStory.gallery}</h2>
+            <div className="farmer-story__gallery">
+              {farmer.images.map((src, i) => (
+                <div key={i} className="farmer-story__gallery-wrap">
+                  {!loadedImgs.has(i) && <div className="farmer-story__gallery-shimmer"><div className="shimmer-wave" /></div>}
+                  <img src={src} alt={`${farmer.name} ${i + 1}`} className="farmer-story__gallery-img" onLoad={() => markLoaded(i)} style={{ opacity: loadedImgs.has(i) ? 1 : 0 }} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

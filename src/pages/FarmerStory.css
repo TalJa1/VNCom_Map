@@ -31,6 +31,30 @@
   padding-top: 2rem;
 }
 
+.farmer-story__avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.farmer-story__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.farmer-story__avatar-shimmer {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
 .farmer-story__emoji {
   font-size: 4rem;
   display: block;
@@ -129,21 +153,48 @@
   margin-bottom: 0;
 }
 
-.farmer-story__gallery-placeholder {
+.farmer-story__gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
-.farmer-story__gallery-item {
-  aspect-ratio: 1;
-  background: #eee;
+.farmer-story__gallery-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #ccc;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+
+.farmer-story__gallery-shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.farmer-story__gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.shimmer-wave {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  animation: shimmer-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 @media (max-width: 600px) {
