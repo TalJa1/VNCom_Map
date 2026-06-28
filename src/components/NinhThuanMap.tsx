@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PRODUCTS, type Product } from '../data/products'
+import { FARMERS } from '../data/farmers'
 import { useT } from '../i18n'
 import './NinhThuanMap.css'
 
@@ -18,14 +19,11 @@ const SPOTS: { x: number; y: number }[] = [
   { x: 4790, y: 8530 },
   { x: 4720, y: 8580 },
   { x: 4800, y: 8640 },
-  { x: 4730, y: 8700 },
-  { x: 4780, y: 8750 },
-  { x: 4810, y: 8800 },
 ]
 
 export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
   const t = useT()
-  const items: Product[] = PRODUCTS.filter((p) => p.provinceKey === 'vn-nt').slice(0, 12)
+  const items: Product[] = FARMERS.map((f) => PRODUCTS.find((p) => p.id === f.productId)).filter((p): p is Product => !!p)
   const [active, setActive] = useState<number | null>(null)
 
   return (
