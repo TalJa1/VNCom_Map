@@ -1,38 +1,45 @@
-const BUCKET = 'main-ada2c.firebasestorage.app'
+const BUCKET = "main-ada2c.firebasestorage.app";
 
 function storageUrl(path: string): string {
-  return `https://firebasestorage.googleapis.com/v0/b/${BUCKET}/o/${encodeURIComponent(path)}?alt=media`
+  return `https://firebasestorage.googleapis.com/v0/b/${BUCKET}/o/${encodeURIComponent(path)}?alt=media`;
 }
 
 function farmerImages(farmerId: string, filenames: string[]): string[] {
-  return filenames.map((f) => storageUrl(`farmers/${farmerId}/${f}`))
+  return filenames.map((f) => storageUrl(`farmers/${farmerId}/${f}`));
 }
 
 export interface Farmer {
-  id: string
-  name: string
-  household: string
-  village: string
-  emoji: string
-  images: string[]
-  tags: string[]
-  quote: string
-  productId: string
-  storyEn: string
-  storyVi: string
+  id: string;
+  name: string;
+  household: string;
+  village: string;
+  emoji: string;
+  images: string[];
+  tags: string[];
+  quote: string;
+  productId: string;
+  storyEn: string;
+  storyVi: string;
 }
 
 export const FARMERS: Farmer[] = [
   {
-    id: 'f1',
-    name: 'Chị Trang',
-    household: 'Chang Chang Farm',
-    village: 'Ninh Thuận',
-    emoji: '👩‍🌾',
-    images: farmerImages('f1', ['DSC00609.JPG', 'DSC00611.JPG', 'DSC00612.JPG', 'DSC00613.JPG']),
-    tags: ['Nho', 'Táo', '35 năm truyền thống'],
-    quote: 'Mỗi địa phương đều có một hương vị riêng. Điều quan trọng là làm sao để người tiêu dùng được biết đến và trải nghiệm đúng hương vị chính gốc của vùng đất đó.',
-    productId: 'p10',
+    id: "f1",
+    name: "Chị Trang",
+    household: "Chang Chang Farm",
+    village: "Ninh Thuận",
+    emoji: "👩‍🌾",
+    images: farmerImages("f1", [
+      "DSC00609.JPG",
+      "DSC00611.JPG",
+      "DSC00612.JPG",
+      "DSC00613.JPG",
+      "DSC00607.JPG",
+    ]),
+    tags: ["Nho", "Táo", "35 năm truyền thống"],
+    quote:
+      "Mỗi địa phương đều có một hương vị riêng. Điều quan trọng là làm sao để người tiêu dùng được biết đến và trải nghiệm đúng hương vị chính gốc của vùng đất đó.",
+    productId: "p10",
     storyEn: `For Ms. Trang of Chang Chang Farm, grapes and apples are more than local crops — they are part of a family story that has continued for generations. Her family has grown grapes and apples in Ninh Thuận for more than 35 years. When she took over and developed the farm, she chose not only to preserve traditional farming experience, but also to improve cultivation methods, production processes, and the way the farm reaches customers.
 
 Today, Chang Chang Farm produces around 40 tons of fruit each year. Behind that number is a long process of care, adaptation, and resilience. Like many farmers, Ms. Trang has faced difficult seasons when fruit prices dropped sharply, sometimes to only 2,000–3,000 VND per kilogram. In those times, some products had to be sold as feed for goats and cows. Instead of giving up, the farm explored ways to process and preserve its produce, reducing its dependence on fresh fruit prices during each harvest season.
@@ -53,15 +60,22 @@ Chang Chang Farm hiện đang áp dụng nhiều cải tiến trong canh tác nh
 Giữa áp lực cạnh tranh với trái cây nhập khẩu giá rẻ, Chang Chang Farm chọn giữ lợi thế bằng sự tươi ngon, nguồn gốc rõ ràng, có kiểm định và không dùng chất bảo quản. Điều chị mong muốn là mỗi vùng đất có thể kể được câu chuyện riêng của nông sản mình, để du khách và người tiêu dùng được trải nghiệm đúng hương vị chính gốc của địa phương.`,
   },
   {
-    id: 'f2',
-    name: 'Anh Hoàng',
-    household: 'Nông hộ Anh Hoàng',
-    village: 'Ninh Thuận',
-    emoji: '🧑‍🌾',
-    images: farmerImages('f2', ['DSC00618.JPG', 'DSC00619.JPG', 'DSC00620.JPG', 'DSC00621.JPG']),
-    tags: ['Nho', '20+ năm kinh nghiệm'],
-    quote: 'Điều tôi mong muốn là sản phẩm được kể bằng câu chuyện về sự uy tín, quy trình trồng chuyên nghiệp và chất lượng ổn định để du khách, khách hàng trong và ngoài nước thêm tin tưởng.',
-    productId: 'p10',
+    id: "f2",
+    name: "Anh Hoàng",
+    household: "Nông hộ Anh Hoàng",
+    village: "Ninh Thuận",
+    emoji: "🧑‍🌾",
+    images: farmerImages("f2", [
+      "DSC00618.JPG",
+      "DSC00619.JPG",
+      "DSC00620.JPG",
+      "DSC00621.JPG",
+      "DSC00617.JPG",
+    ]),
+    tags: ["Nho", "20+ năm kinh nghiệm"],
+    quote:
+      "Điều tôi mong muốn là sản phẩm được kể bằng câu chuyện về sự uy tín, quy trình trồng chuyên nghiệp và chất lượng ổn định để du khách, khách hàng trong và ngoài nước thêm tin tưởng.",
+    productId: "p10",
     storyEn: `For Mr. Hoàng, grapes are not only a source of income — they are part of his childhood. Growing up in a farming family, he was introduced to grape cultivation at an early age through his parents' work. Over the years, what began as a familiar family activity became a lifelong commitment. Today, he has spent more than 20 years growing grapes in Ninh Thuận.
 
 His decision to continue with grape farming comes from both economic value and emotional attachment. Compared with several other crops, grapes can bring better revenue, and they are also one of the signature agricultural products of Ninh Thuận. For Mr. Hoàng, developing grape farming is not only about supporting his family's livelihood, but also about helping more local and international visitors recognize the value of Ninh Thuận's agricultural identity.
@@ -86,15 +100,22 @@ Trong canh tác, anh Hoàng là một trong những nông hộ đi đầu trong 
 Trước sự cạnh tranh của trái cây nhập khẩu, đặc biệt là trái cây Trung Quốc giá rẻ, anh Hoàng từng gặp áp lực về giá thành và mẫu mã. Nhưng thay vì chạy theo giá rẻ, anh chọn cải tiến quy trình, ổn định chất lượng và xây dựng uy tín. Điều anh mong muốn khi sản phẩm được đưa lên bản đồ nông sản là người tiêu dùng có thể hiểu rõ hơn về sự chuyên nghiệp trong quy trình trồng, chất lượng ổn định và lý do vì sao nho Ninh Thuận xứng đáng được tin tưởng.`,
   },
   {
-    id: 'f3',
-    name: 'Anh Mân',
-    household: 'Nông hộ Anh Mân',
-    village: 'Ninh Thuận',
-    emoji: '🧑‍🌾',
-    images: farmerImages('f3', ['DSC00624.JPG', 'DSC00625.JPG', 'DSC00626.JPG', 'DSC00627.JPG']),
-    tags: ['Chanh dây', 'Thí điểm', '33 tuổi'],
-    quote: 'Tôi mong mô hình chanh dây có thể được nhân rộng trước, từ đó tăng độ nhận diện cho sản phẩm và mở ra hướng phát triển mới cho nông nghiệp địa phương.',
-    productId: 'p10m',
+    id: "f3",
+    name: "Anh Mân",
+    household: "Nông hộ Anh Mân",
+    village: "Ninh Thuận",
+    emoji: "🧑‍🌾",
+    images: farmerImages("f3", [
+      "DSC00624.JPG",
+      "DSC00625.JPG",
+      "DSC00626.JPG",
+      "DSC00627.JPG",
+      "DSC00629.JPG",
+    ]),
+    tags: ["Chanh dây", "Thí điểm", "33 tuổi"],
+    quote:
+      "Tôi mong mô hình chanh dây có thể được nhân rộng trước, từ đó tăng độ nhận diện cho sản phẩm và mở ra hướng phát triển mới cho nông nghiệp địa phương.",
+    productId: "p10m",
     storyEn: `For Mr. Mân, passion fruit represents a new direction in his family's farming journey. At the age of 33, he began experimenting with this crop with the hope of finding a more promising farming model — one that meets market demand and may open up new opportunities for local agriculture.
 
 Unlike farmers who have worked with the same traditional crop for decades, Mr. Mân's passion fruit garden is still in its early stage. He has been growing the crop for about one year, and because it is still a pilot model, the current yield is only a few dozen kilograms. Although the production is still small, it is an important first step for him to observe how the crop adapts, evaluate cultivation efficiency, and prepare for possible expansion in the future.
@@ -119,15 +140,22 @@ Trong quá trình canh tác, anh Mân đã bước đầu áp dụng một số 
 Điều anh Mân mong muốn trước mắt là mô hình chanh dây có thể được nhân rộng, từ đó tăng độ nhận diện cho sản phẩm và tạo nền tảng để tiếp cận khách hàng tốt hơn. Với anh, câu chuyện của vườn chanh dây không chỉ là câu chuyện về một giống cây mới, mà còn là hành trình thử nghiệm, học hỏi và tìm kiếm cơ hội để nông nghiệp địa phương phát triển theo hướng bền vững hơn.`,
   },
   {
-    id: 'f4',
-    name: 'Cô Như',
-    household: 'Hộ trồng táo',
-    village: 'Ninh Thuận',
-    emoji: '👩‍🌾',
-    images: farmerImages('f4', ['DSC00636.JPG', 'DSC00637.JPG', 'DSC00638.JPG', 'DSC00640.JPG']),
-    tags: ['Táo', '5 năm kinh nghiệm'],
-    quote: 'Tôi mong sản phẩm táo của gia đình có thể tiếp cận tốt hơn với các sàn thương mại điện tử, từ đó mở rộng đầu ra và tăng doanh số cho nông sản địa phương.',
-    productId: 'p10b',
+    id: "f4",
+    name: "Cô Như",
+    household: "Hộ trồng táo",
+    village: "Ninh Thuận",
+    emoji: "👩‍🌾",
+    images: farmerImages("f4", [
+      "DSC00636.JPG",
+      "DSC00637.JPG",
+      "DSC00638.JPG",
+      "DSC00640.JPG",
+      "DSC00641.JPG",
+    ]),
+    tags: ["Táo", "5 năm kinh nghiệm"],
+    quote:
+      "Tôi mong sản phẩm táo của gia đình có thể tiếp cận tốt hơn với các sàn thương mại điện tử, từ đó mở rộng đầu ra và tăng doanh số cho nông sản địa phương.",
+    productId: "p10b",
     storyEn: `For Ms. Như, apple farming is a practical and meaningful choice that fits both the natural conditions and farming life in Ninh Thuận. Over the past five years, she has gradually built a stable cultivation model, with apples becoming an important source of income for the family.
 
 She chose to continue growing apples because this crop is one of the distinctive agricultural products of the region. It is well suited to Ninh Thuận's climate and soil, and it provides a relatively stable yield of around 19–20 tons per year. For a farming household, this level of stability is an important reason to stay with the crop.
@@ -152,15 +180,22 @@ Trong canh tác, hộ của cô Như hiện chưa áp dụng nhiều công ngh�
 Điều cô mong muốn trong tương lai là sản phẩm táo của gia đình có thể tiếp cận tốt hơn với các sàn thương mại điện tử và kênh bán hàng trực tuyến. Với sự hỗ trợ phù hợp, những vườn táo địa phương như cô có thể tăng độ nhận diện, mở rộng đầu ra và cải thiện doanh số.`,
   },
   {
-    id: 'f5',
-    name: 'Chú Tín',
-    household: 'Nông hộ Chú Tín',
-    village: 'Ninh Thuận',
-    emoji: '🧑‍🌾',
-    images: farmerImages('f5', ['DSC00644.JPG', 'DSC00647.JPG', 'DSC00648.JPG', 'DSC00649.JPG']),
-    tags: ['Táo', '56 tuổi', '3 năm kinh nghiệm'],
-    quote: 'Tôi mong người tiêu dùng biết đến vườn táo xanh, sạch, ngọt, được chăm sóc kỹ càng và có thể tiếp cận được nhiều khách hàng hơn.',
-    productId: 'p10b',
+    id: "f5",
+    name: "Chú Tín",
+    household: "Nông hộ Chú Tín",
+    village: "Ninh Thuận",
+    emoji: "🧑‍🌾",
+    images: farmerImages("f5", [
+      "DSC00644.JPG",
+      "DSC00647.JPG",
+      "DSC00648.JPG",
+      "DSC00649.JPG",
+      "DSC00646.JPG",
+    ]),
+    tags: ["Táo", "56 tuổi", "3 năm kinh nghiệm"],
+    quote:
+      "Tôi mong người tiêu dùng biết đến vườn táo xanh, sạch, ngọt, được chăm sóc kỹ càng và có thể tiếp cận được nhiều khách hàng hơn.",
+    productId: "p10b",
     storyEn: `For Mr. Tín, apple farming is a new direction after many years of working in agriculture. In the past, his family grew melons, but over time, melons were no longer as suitable for their farming conditions and economic goals. He then decided to shift to apples — a perennial crop that offers a more stable direction for farming in Ninh Thuận.
 
 Mr. Tín has been growing apples for three years. His garden currently produces under three tons per year, with two harvest seasons annually. Compared with long-established farms, his production scale is still modest. However, it reflects a process of learning, adapting, and gradually becoming familiar with a new crop.
@@ -189,15 +224,22 @@ Trong canh tác, chú Tín chưa áp dụng nhiều công nghệ hiện đại, 
 Điều chú mong muốn khi sản phẩm được giới thiệu trên bản đồ nông sản là người tiêu dùng có thể biết đến vườn táo xanh, sạch, ngọt và được chăm sóc kỹ càng. Với chú, nếu câu chuyện của vườn được kể rõ hơn, sản phẩm táo địa phương sẽ có thêm cơ hội tiếp cận nhiều khách hàng mới.`,
   },
   {
-    id: 'f6',
-    name: 'Cô Xéo',
-    household: 'Nông hộ Cô Xéo',
-    village: 'Ninh Thuận',
-    emoji: '👩‍🌾',
-    images: farmerImages('f6', ['DSC00655.JPG', 'DSC00656.JPG', 'DSC00657.JPG', 'DSC00658.JPG']),
-    tags: ['Măng tây xanh', '8 năm kinh nghiệm', 'Tuần hoàn'],
-    quote: 'Tôi muốn mọi người biết đến măng tây xanh được trồng theo mô hình tuần hoàn, sạch và an toàn. Tôi làm bằng cái tâm để mang đến thực phẩm tốt cho sức khỏe và tạo công ăn việc làm ổn định cho những người lao động có hoàn cảnh khó khăn.',
-    productId: 'p10l',
+    id: "f6",
+    name: "Cô Xéo",
+    household: "Nông hộ Cô Xéo",
+    village: "Ninh Thuận",
+    emoji: "👩‍🌾",
+    images: farmerImages("f6", [
+      "DSC00655.JPG",
+      "DSC00656.JPG",
+      "DSC00657.JPG",
+      "DSC00658.JPG",
+      "DSC00653.JPG",
+    ]),
+    tags: ["Măng tây xanh", "8 năm kinh nghiệm", "Tuần hoàn"],
+    quote:
+      "Tôi muốn mọi người biết đến măng tây xanh được trồng theo mô hình tuần hoàn, sạch và an toàn. Tôi làm bằng cái tâm để mang đến thực phẩm tốt cho sức khỏe và tạo công ăn việc làm ổn định cho những người lao động có hoàn cảnh khó khăn.",
+    productId: "p10l",
     storyEn: `For Ms. Xéo, green asparagus is much more than a crop — it is what she lovingly calls her "happy plant." Since the end of 2018, when she began growing asparagus on the sandy soil of Ninh Thuận, she discovered that this crop was well suited to the local environment while providing a stable source of income and daily work for her family.
 
 After nearly eight years, asparagus has become an essential part of her life. Every day, one small plot of land produces around 15–20 kilograms of fresh asparagus, equivalent to approximately 450–500 kilograms each month. To Ms. Xéo, the true value of asparagus is not only its productivity but also the opportunity it creates: regular work, stable income, and employment for local people facing economic hardship.
@@ -222,15 +264,22 @@ Những năm gần đây, cô Xéo từng bước thay đổi phương pháp can
 Điều cô Xéo mong muốn nhất khi sản phẩm của mình xuất hiện trên Bản đồ Nông sản Việt là người tiêu dùng biết đến những bó măng tây xanh được trồng theo mô hình tuần hoàn, sạch và an toàn. Với cô, làm nông không chỉ là tạo ra một sản phẩm chất lượng mà còn là làm bằng cái tâm, để người sử dụng có thực phẩm tốt cho sức khỏe, đồng thời giúp nhiều lao động địa phương có việc làm và thu nhập ổn định.`,
   },
   {
-    id: 'f7',
-    name: 'Chú Kiều Văn Toản',
-    household: 'Nông hộ Kiều Văn Toản',
-    village: 'Ninh Thuận',
-    emoji: '🧑‍🌾',
-    images: farmerImages('f7', ['DSC00662.JPG', 'DSC00663.JPG', 'DSC00664.JPG', 'DSC00665.JPG']),
-    tags: ['Đậu phộng', '56 tuổi', 'Hữu cơ'],
-    quote: 'Tôi muốn mọi người biết rằng đậu phộng của gia đình được trồng theo mô hình sạch, dùng phân hữu cơ, thuốc sinh học và không dùng chất độc hại, để không ảnh hưởng đến sức khỏe con người.',
-    productId: 'p10n',
+    id: "f7",
+    name: "Chú Kiều Văn Toản",
+    household: "Nông hộ Kiều Văn Toản",
+    village: "Ninh Thuận",
+    emoji: "🧑‍🌾",
+    images: farmerImages("f7", [
+      "DSC00662.JPG",
+      "DSC00663.JPG",
+      "DSC00664.JPG",
+      "DSC00665.JPG",
+      "DSC00666.JPG",
+    ]),
+    tags: ["Đậu phộng", "56 tuổi", "Hữu cơ"],
+    quote:
+      "Tôi muốn mọi người biết rằng đậu phộng của gia đình được trồng theo mô hình sạch, dùng phân hữu cơ, thuốc sinh học và không dùng chất độc hại, để không ảnh hưởng đến sức khỏe con người.",
+    productId: "p10n",
     storyEn: `For Mr. Kiều Văn Toản, peanuts are not only a crop for sale, but also part of his family's circular farming practice. He has been growing peanuts for about two to three years and sees the crop as highly beneficial for farmers, especially in the nutrient-poor soil conditions of Ninh Thuận.
 
 Each year, depending on the cultivated area, his family grows around one to two small plots of peanuts, producing approximately 1–1.1 tons. Although the scale is not large, peanuts provide more than one source of value. The seeds can be sold to the market, while the plant stems after harvest can be used as animal feed or green manure for the farm, especially for the family's asparagus garden.
@@ -255,15 +304,22 @@ Trong canh tác, chú Toản chú trọng cải thiện chất lượng đất b
 Điều chú mong muốn khi đậu phộng của mình được đưa lên Bản đồ Nông sản Việt là người tiêu dùng hiểu rằng đây là sản phẩm được làm theo mô hình sạch, sử dụng phân hữu cơ, thuốc sinh học và không dùng chất độc hại. Với chú, giá trị của nông sản không chỉ nằm ở hạt đậu, mà còn ở cách người nông dân làm ra nó một cách an toàn, có trách nhiệm với đất đai và sức khỏe con người.`,
   },
   {
-    id: 'f8',
-    name: 'Anh Tứ',
-    household: 'Nông hộ Anh Tứ',
-    village: 'Ninh Thuận',
-    emoji: '🧑‍🌾',
-    images: farmerImages('f8', ['DSC00669.JPG', 'DSC00670.JPG', 'DSC00671.JPG', 'DSC00672.JPG']),
-    tags: ['Dừa', '35 tuổi', '5-6 năm kinh nghiệm'],
-    quote: 'Tôi muốn mọi người biết đến dừa Ninh Thuận là loại nông sản tươi mát, sạch sẽ, được chăm sóc theo quy trình nông sản sạch.',
-    productId: 'p10o',
+    id: "f8",
+    name: "Anh Tứ",
+    household: "Nông hộ Anh Tứ",
+    village: "Ninh Thuận",
+    emoji: "🧑‍🌾",
+    images: farmerImages("f8", [
+      "DSC00669.JPG",
+      "DSC00670.JPG",
+      "DSC00671.JPG",
+      "DSC00672.JPG",
+      "DSC00667.JPG",
+    ]),
+    tags: ["Dừa", "35 tuổi", "5-6 năm kinh nghiệm"],
+    quote:
+      "Tôi muốn mọi người biết đến dừa Ninh Thuận là loại nông sản tươi mát, sạch sẽ, được chăm sóc theo quy trình nông sản sạch.",
+    productId: "p10o",
     storyEn: `For Mr. Tứ, the coconut garden is not only a source of income but also a family legacy. His parents were the ones who first planted the coconut trees, and he later took over the garden to continue caring for it. Over the past five to six years, he has gradually maintained and developed the family's coconut farm in Ninh Thuận.
 
 Each year, his garden produces around 15,000–20,000 coconuts. However, the yield is not fixed. It depends greatly on the weather, the dry and rainy seasons, and the amount of water available each year. In the dry climate of Ninh Thuận, water plays an essential role in determining both the productivity and quality of the coconuts.
@@ -292,15 +348,22 @@ Trong canh tác, gia đình anh đã áp dụng hệ thống tưới tiết ki�
 Điều anh mong muốn khi sản phẩm được đưa lên Bản đồ Nông sản Việt là người tiêu dùng biết đến dừa Ninh Thuận như một loại nông sản tươi mát, sạch sẽ và được chăm sóc theo quy trình nông sản sạch.`,
   },
   {
-    id: 'f9',
-    name: 'Chị Trâm',
-    household: 'Nông hộ Chị Trâm',
-    village: 'Ninh Thuận',
-    emoji: '👩‍🌾',
-    images: farmerImages('f9', ['DSC00676.JPG', 'DSC00677.JPG', 'DSC00678.JPG', 'DSC00679.JPG']),
-    tags: ['Nho Mẫu Đơn', 'Nho sữa Hàn Quốc', '30 tuổi'],
-    quote: 'Tôi muốn nhiều khách hàng biết đến nho sạch, được chăm bón kỹ càng bởi những người trẻ và thấy rằng ở Ninh Thuận vẫn có thể trồng được những giống nho đặc biệt.',
-    productId: 'p10',
+    id: "f9",
+    name: "Chị Trâm",
+    household: "Nông hộ Chị Trâm",
+    village: "Ninh Thuận",
+    emoji: "👩‍🌾",
+    images: farmerImages("f9", [
+      "DSC00676.JPG",
+      "DSC00677.JPG",
+      "DSC00678.JPG",
+      "DSC00679.JPG",
+      "DSC00673.JPG",
+    ]),
+    tags: ["Nho Mẫu Đơn", "Nho sữa Hàn Quốc", "30 tuổi"],
+    quote:
+      "Tôi muốn nhiều khách hàng biết đến nho sạch, được chăm bón kỹ càng bởi những người trẻ và thấy rằng ở Ninh Thuận vẫn có thể trồng được những giống nho đặc biệt.",
+    productId: "p10",
     storyEn: `For Ms. Trâm, the vineyard represents a connection between the experience of the older generation and the new approach of young farmers. Her family began growing Shine Muscat grapes and Korean milk grapes in 2020. At first, the vineyard was managed by her mother. Later, when her mother became ill, Ms. Trâm and her husband took over and continued developing the farm with a more modern approach, focusing not only on product quality but also on how to reach customers.
 
 On an area of about 1.8 sào, her vineyard produces around 600–800 kilograms of grapes each year. The yield is not large, but it reflects the effort required to cultivate these delicate grape varieties. Shine Muscat is especially difficult to grow in hot weather, which makes Ms. Trâm even more determined to continue. She wants to show that Ninh Thuận can grow these special grape varieties if the right cultivation methods are applied.
@@ -328,8 +391,8 @@ Một điểm khác biệt trong câu chuyện của chị Trâm là vai trò c�
 
 Nếu được giới thiệu trên Bản đồ Nông sản Việt, chị mong nhiều khách hàng biết đến nho của gia đình như một sản phẩm sạch, được chăm bón cẩn thận bởi những người trẻ. Với chị, câu chuyện của vườn nho không chỉ là câu chuyện về một loại trái cây đặc biệt, mà còn là câu chuyện về sự tiếp nối, đổi mới và niềm tin rằng nông nghiệp địa phương vẫn có thể phát triển theo cách hiện đại hơn.`,
   },
-]
+];
 
 export function farmerByProductId(productId: string): Farmer | undefined {
-  return FARMERS.find((f) => f.productId === productId)
+  return FARMERS.find((f) => f.productId === productId);
 }
