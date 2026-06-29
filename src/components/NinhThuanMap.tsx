@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PRODUCTS } from '../data/products'
-import { FARMERS, type Farmer } from '../data/farmers'
+import { FARMERS } from '../data/farmers'
 import { useT } from '../i18n'
 import './NinhThuanMap.css'
 
