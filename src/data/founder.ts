@@ -27,9 +27,8 @@ export const FOUNDER: FounderProfile = {
     vi: 'Người sáng lập · 16 tuổi · Sáng kiến Nông nghiệp số Trẻ',
   },
   images: [
-    storageUrl('founder/f1.JPG'),
     storageUrl('founder/f2.JPG'),
     storageUrl('founder/f3.JPG'),
   ],
-  placeholderSlides: 3,
+  placeholderSlides: 2,
 }
