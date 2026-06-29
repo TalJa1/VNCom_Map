@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { QRCodeSVG } from 'qrcode.react'
 import { formatVND, type Product } from '../data/products'
 import './CartDrawer.css'
 
@@ -56,84 +57,6 @@ function Confetti({ active }: { active: boolean }) {
         />
       ))}
     </div>
-  )
-}
-
-function encodeQR(text: string, size: number) {
-  const modules = generateQRMatrix(text)
-  const n = modules.length
-  const cellSize = size / n
-  const rects: { x: number; y: number; w: number; h: number }[] = []
-  for (let r = 0; r < n; r++)
-    for (let c = 0; c < n; c++)
-      if (modules[r][c])
-        rects.push({ x: c * cellSize, y: r * cellSize, w: cellSize, h: cellSize })
-  return { rects, total: size }
-}
-
-function generateQRMatrix(data: string): boolean[][] {
-  const size = 29
-  const grid: boolean[][] = Array.from({ length: size }, () => Array(size).fill(false))
-
-  const drawFinderPattern = (row: number, col: number) => {
-    for (let r = -1; r <= 7; r++)
-      for (let c = -1; c <= 7; c++) {
-        const rr = row + r, cc = col + c
-        if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue
-        if (r === -1 || r === 7 || c === -1 || c === 7) grid[rr][cc] = false
-        else if (r === 0 || r === 6 || c === 0 || c === 6) grid[rr][cc] = true
-        else if (r >= 2 && r <= 4 && c >= 2 && c <= 4) grid[rr][cc] = true
-        else grid[rr][cc] = false
-      }
-  }
-
-  drawFinderPattern(0, 0)
-  drawFinderPattern(0, size - 7)
-  drawFinderPattern(size - 7, 0)
-
-  for (let i = 8; i < size - 8; i++) {
-    grid[6][i] = i % 2 === 0
-    grid[i][6] = i % 2 === 0
-  }
-
-  const drawAlignmentPattern = (row: number, col: number) => {
-    for (let r = -2; r <= 2; r++)
-      for (let c = -2; c <= 2; c++) {
-        grid[row + r][col + c] =
-          Math.abs(r) === 2 || Math.abs(c) === 2 || (r === 0 && c === 0)
-      }
-  }
-  drawAlignmentPattern(size - 9, size - 9)
-
-  let hash = 0
-  for (let i = 0; i < data.length; i++) {
-    hash = ((hash << 5) - hash + data.charCodeAt(i)) | 0
-  }
-  let seed = Math.abs(hash)
-  const rng = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff }
-
-  for (let r = 0; r < size; r++)
-    for (let c = 0; c < size; c++) {
-      if (r < 9 && c < 9) continue
-      if (r < 9 && c >= size - 8) continue
-      if (r >= size - 8 && c < 9) continue
-      if (r === 6 || c === 6) continue
-      if (r >= size - 11 && r <= size - 7 && c >= size - 11 && c <= size - 7) continue
-      grid[r][c] = rng() > 0.5
-    }
-
-  return grid
-}
-
-function QRCodeSVG({ text, size = 180 }: { text: string; size?: number }) {
-  const { rects, total } = encodeQR(text, size)
-  return (
-    <svg width={total} height={total} viewBox={`0 0 ${total} ${total}`}>
-      <rect width={total} height={total} fill="#fff" />
-      {rects.map((r, i) => (
-        <rect key={i} x={r.x} y={r.y} width={r.w} height={r.h} fill="#1a1a2e" />
-      ))}
-    </svg>
   )
 }
 
@@ -207,7 +130,7 @@ function PaymentFlow({
             </div>
             <p className="qr-amount">{formatVND(total)}</p>
             <div className="qr-code-wrap">
-              <QRCodeSVG text={payUrl} size={180} />
+              <QRCodeSVG value={payUrl} size={180} level="M" />
               {phase === 'processing' && <div className="qr-scanning" />}
             </div>
             <p className="qr-instruction">
