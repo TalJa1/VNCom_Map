@@ -8,7 +8,7 @@ import ImageCarousel from './components/ImageCarousel'
 import FounderPhoto from './components/FounderPhoto'
 import Marketplace from './components/Marketplace'
 import CartDrawer, { type CartItem } from './components/CartDrawer'
-import { FARMERS, farmerByProductId } from './data/farmers'
+import { FARMERS } from './data/farmers'
 import { PRODUCTS, type Product } from './data/products'
 import { useLang, useT } from './i18n'
 import logoImg from './assets/logo.png'
@@ -123,13 +123,11 @@ function App() {
 
   // From the map: a delicacy links to the farmer who grows it — jump to that
   // farmer's story card and flash it.
-  const focusStory = useCallback((productId: string) => {
-    const farmer = farmerByProductId(productId)
-    const targetId = farmer?.id ?? productId
-    const el = document.getElementById(`story-${targetId}`)
+  const focusStory = useCallback((farmerId: string) => {
+    const el = document.getElementById(`story-${farmerId}`)
     el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    setFlashId(targetId)
-    window.setTimeout(() => setFlashId((cur) => (cur === targetId ? null : cur)), 1800)
+    setFlashId(farmerId)
+    window.setTimeout(() => setFlashId((cur) => (cur === farmerId ? null : cur)), 1800)
   }, [])
 
   // The national map filters the marketplace by the clicked province.

@@ -1,0 +1,121 @@
+.paypage {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0fdf4, #e8f5e9);
+  padding: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.paypage__card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.paypage__bank-bar {
+  margin-bottom: 20px;
+}
+
+.paypage__bank-logo {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a3a8f, #2563eb);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 6px 20px;
+  border-radius: 8px;
+  letter-spacing: 0.04em;
+}
+
+.paypage__title {
+  color: #14532d;
+  font-size: 1.3rem;
+  margin: 0 0 20px;
+}
+
+.paypage__title--success {
+  color: #2e8b57;
+  margin-top: 16px;
+}
+
+.paypage__subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.paypage__check {
+  margin-bottom: 8px;
+}
+
+.paypage__details {
+  text-align: left;
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.paypage__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+.paypage__row--total {
+  font-size: 1.05rem;
+}
+
+.paypage__row--total strong {
+  color: #b45309;
+  font-size: 1.15rem;
+}
+
+.paypage__divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 8px 0;
+}
+
+.paypage__btn {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #2e8b57, #14532d);
+  color: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(46, 139, 87, 0.3);
+}
+
+.paypage__btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(46, 139, 87, 0.4);
+}
+
+.paypage__btn:active {
+  transform: scale(0.98);
+}
+
+.paypage__footer {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.paypage__expired {
+  color: #6b7280;
+  font-size: 1rem;
+}

@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { PRODUCTS, type Product } from '../data/products'
-import { FARMERS } from '../data/farmers'
+import { PRODUCTS } from '../data/products'
+import { FARMERS, type Farmer } from '../data/farmers'
 import { useT } from '../i18n'
 import './NinhThuanMap.css'
 
 interface NinhThuanMapProps {
   /** Called when a hotspot's "read story" is triggered (scrolls to Section 4). */
-  onSelect: (productId: string) => void
+  onSelect: (farmerId: string) => void
 }
 
 const SPOTS: { x: number; y: number }[] = [
@@ -23,7 +23,10 @@ const SPOTS: { x: number; y: number }[] = [
 
 export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
   const t = useT()
-  const items: Product[] = FARMERS.map((f) => PRODUCTS.find((p) => p.id === f.productId)).filter((p): p is Product => !!p)
+  const items = FARMERS.map((f) => {
+    const product = PRODUCTS.find((p) => p.id === f.productId)
+    return { farmer: f, emoji: product?.emoji ?? f.emoji, productName: product?.name ?? '' }
+  })
   const [active, setActive] = useState<number | null>(null)
 
   return (
@@ -54,13 +57,13 @@ export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
               fill="none"
               d="M5004 8466L5033 8504L4996 8551L4991 8576L4957 8627L4907 8618L4889 8578L4872 8582L4887 8605L4879 8667L4874 8785L4826 8820"
             />
-            {items.map((p, i) => {
+            {items.map(({ farmer, emoji, productName }, i) => {
               const pos = SPOTS[i] ?? { x: 4750, y: 8500 }
               const isActive = active === i
               const sz = 46
               return (
                 <foreignObject
-                  key={p.id}
+                  key={farmer.id}
                   x={pos.x - sz / 2}
                   y={pos.y - sz / 2}
                   width={sz}
@@ -74,15 +77,15 @@ export default function NinhThuanMap({ onSelect }: NinhThuanMapProps) {
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
                     onMouseLeave={() => setActive((cur) => (cur === i ? null : cur))}
-                    onClick={() => onSelect(p.id)}
-                    aria-label={p.name}
+                    onClick={() => onSelect(farmer.id)}
+                    aria-label={`${farmer.name} — ${productName}`}
                   >
                     <span className="ntmap__pulse" />
-                    <span className="ntmap__dot">{p.emoji}</span>
+                    <span className="ntmap__dot">{emoji}</span>
                     {isActive && (
                       <span className="ntmap__pop" role="tooltip">
-                        <span className="ntmap__pop-label">{t.map.quickTitle}</span>
-                        <span className="ntmap__pop-name">{p.name}</span>
+                        <span className="ntmap__pop-label">{farmer.name}</span>
+                        <span className="ntmap__pop-name">{productName}</span>
                         <span className="ntmap__pop-cta">{t.map.readStory} →</span>
                       </span>
                     )}

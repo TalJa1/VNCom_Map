@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import FarmerStory from './pages/FarmerStory.tsx'
+import PayConfirm from './pages/PayConfirm.tsx'
 import { LanguageProvider } from './i18n'
 
 createRoot(document.getElementById('root')!).render(
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/farmer/:id" element={<FarmerStory />} />
+          <Route path="/pay/:orderId" element={<PayConfirm />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

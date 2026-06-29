@@ -281,6 +281,86 @@
   box-shadow: 0 6px 24px rgba(46, 139, 87, 0.4);
 }
 
+/* ---- QR Payment ---- */
+.qr-header {
+  margin-bottom: 8px;
+}
+.qr-bank-logo {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a3a8f, #2563eb);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 6px 20px;
+  border-radius: 8px;
+  letter-spacing: 0.04em;
+}
+.qr-amount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #b45309;
+  margin: 8px 0 16px;
+}
+.qr-code-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 16px;
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+.qr-scanning {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #2e8b57, transparent);
+  border-radius: 2px;
+  animation: qrScan 1.5s ease-in-out infinite;
+}
+@keyframes qrScan {
+  0% { top: 16px; }
+  50% { top: calc(100% - 19px); }
+  100% { top: 16px; }
+}
+.qr-instruction {
+  color: #5b7a64;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+  min-height: 1.4em;
+}
+.qr-spinner {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.qr-spinner__ring {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2e8b57;
+  border-radius: 50%;
+  animation: qrSpin 0.8s linear infinite;
+}
+@keyframes qrSpin {
+  to { transform: rotate(360deg); }
+}
+.qr-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #6b7280;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+  margin-top: 4px;
+}
+.qr-meta strong {
+  color: #374151;
+}
+
 /* ---- Confetti ---- */
 .confetti-container {
   position: fixed;

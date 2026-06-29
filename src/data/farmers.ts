@@ -39,7 +39,7 @@ export const FARMERS: Farmer[] = [
     tags: ["Nho", "Táo", "35 năm truyền thống"],
     quote:
       "Mỗi địa phương đều có một hương vị riêng. Điều quan trọng là làm sao để người tiêu dùng được biết đến và trải nghiệm đúng hương vị chính gốc của vùng đất đó.",
-    productId: "p10",
+    productId: "p10b-f1",
     storyEn: `For Ms. Trang of Chang Chang Farm, grapes and apples are more than local crops — they are part of a family story that has continued for generations. Her family has grown grapes and apples in Ninh Thuận for more than 35 years. When she took over and developed the farm, she chose not only to preserve traditional farming experience, but also to improve cultivation methods, production processes, and the way the farm reaches customers.
 
 Today, Chang Chang Farm produces around 40 tons of fruit each year. Behind that number is a long process of care, adaptation, and resilience. Like many farmers, Ms. Trang has faced difficult seasons when fruit prices dropped sharply, sometimes to only 2,000–3,000 VND per kilogram. In those times, some products had to be sold as feed for goats and cows. Instead of giving up, the farm explored ways to process and preserve its produce, reducing its dependence on fresh fruit prices during each harvest season.
@@ -75,7 +75,7 @@ Giữa áp lực cạnh tranh với trái cây nhập khẩu giá rẻ, Chang Ch
     tags: ["Nho", "20+ năm kinh nghiệm"],
     quote:
       "Điều tôi mong muốn là sản phẩm được kể bằng câu chuyện về sự uy tín, quy trình trồng chuyên nghiệp và chất lượng ổn định để du khách, khách hàng trong và ngoài nước thêm tin tưởng.",
-    productId: "p10",
+    productId: "p10-f2",
     storyEn: `For Mr. Hoàng, grapes are not only a source of income — they are part of his childhood. Growing up in a farming family, he was introduced to grape cultivation at an early age through his parents' work. Over the years, what began as a familiar family activity became a lifelong commitment. Today, he has spent more than 20 years growing grapes in Ninh Thuận.
 
 His decision to continue with grape farming comes from both economic value and emotional attachment. Compared with several other crops, grapes can bring better revenue, and they are also one of the signature agricultural products of Ninh Thuận. For Mr. Hoàng, developing grape farming is not only about supporting his family's livelihood, but also about helping more local and international visitors recognize the value of Ninh Thuận's agricultural identity.
@@ -155,7 +155,7 @@ Trong quá trình canh tác, anh Mân đã bước đầu áp dụng một số 
     tags: ["Táo", "5 năm kinh nghiệm"],
     quote:
       "Tôi mong sản phẩm táo của gia đình có thể tiếp cận tốt hơn với các sàn thương mại điện tử, từ đó mở rộng đầu ra và tăng doanh số cho nông sản địa phương.",
-    productId: "p10b",
+    productId: "p10b-f4",
     storyEn: `For Ms. Như, apple farming is a practical and meaningful choice that fits both the natural conditions and farming life in Ninh Thuận. Over the past five years, she has gradually built a stable cultivation model, with apples becoming an important source of income for the family.
 
 She chose to continue growing apples because this crop is one of the distinctive agricultural products of the region. It is well suited to Ninh Thuận's climate and soil, and it provides a relatively stable yield of around 19–20 tons per year. For a farming household, this level of stability is an important reason to stay with the crop.
@@ -195,7 +195,7 @@ Trong canh tác, hộ của cô Như hiện chưa áp dụng nhiều công ngh�
     tags: ["Táo", "56 tuổi", "3 năm kinh nghiệm"],
     quote:
       "Tôi mong người tiêu dùng biết đến vườn táo xanh, sạch, ngọt, được chăm sóc kỹ càng và có thể tiếp cận được nhiều khách hàng hơn.",
-    productId: "p10b",
+    productId: "p10b-f5",
     storyEn: `For Mr. Tín, apple farming is a new direction after many years of working in agriculture. In the past, his family grew melons, but over time, melons were no longer as suitable for their farming conditions and economic goals. He then decided to shift to apples — a perennial crop that offers a more stable direction for farming in Ninh Thuận.
 
 Mr. Tín has been growing apples for three years. His garden currently produces under three tons per year, with two harvest seasons annually. Compared with long-established farms, his production scale is still modest. However, it reflects a process of learning, adapting, and gradually becoming familiar with a new crop.
@@ -363,7 +363,7 @@ Trong canh tác, gia đình anh đã áp dụng hệ thống tưới tiết ki�
     tags: ["Nho Mẫu Đơn", "Nho sữa Hàn Quốc", "30 tuổi"],
     quote:
       "Tôi muốn nhiều khách hàng biết đến nho sạch, được chăm bón kỹ càng bởi những người trẻ và thấy rằng ở Ninh Thuận vẫn có thể trồng được những giống nho đặc biệt.",
-    productId: "p10",
+    productId: "p10-f9",
     storyEn: `For Ms. Trâm, the vineyard represents a connection between the experience of the older generation and the new approach of young farmers. Her family began growing Shine Muscat grapes and Korean milk grapes in 2020. At first, the vineyard was managed by her mother. Later, when her mother became ill, Ms. Trâm and her husband took over and continued developing the farm with a more modern approach, focusing not only on product quality but also on how to reach customers.
 
 On an area of about 1.8 sào, her vineyard produces around 600–800 kilograms of grapes each year. The yield is not large, but it reflects the effort required to cultivate these delicate grape varieties. Shine Muscat is especially difficult to grow in hot weather, which makes Ms. Trâm even more determined to continue. She wants to show that Ninh Thuận can grow these special grape varieties if the right cultivation methods are applied.

@@ -106,7 +106,7 @@ const en: Dict = {
     handbook: 'Handbook',
     connect: 'Connect',
   },
-  brand: { name: 'Viet-Farm', tagline: 'Youth Digital Agriculture Initiative' },
+  brand: { name: 'Youth Digital Agriculture Initiative', tagline: 'Rooted in the Land, Told by the Web' },
   hero: {
     eyebrow: 'Youth Digital Agriculture Initiative',
     title: ['Rooted in the Land,', 'Told by the Web'],
@@ -203,7 +203,7 @@ const vi: Dict = {
     handbook: 'Cẩm nang',
     connect: 'Kết nối',
   },
-  brand: { name: 'Viet-Farm', tagline: 'Sáng kiến Nông nghiệp số Trẻ' },
+  brand: { name: 'Youth Digital Agriculture Initiative', tagline: 'Sáng kiến Nông nghiệp số Trẻ' },
   hero: {
     eyebrow: 'Sáng kiến Nông nghiệp số Trẻ',
     title: ['Sâu rễ từ lòng đất,', 'kể chuyện bằng trang web'],
