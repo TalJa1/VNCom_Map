@@ -78,35 +78,36 @@ function PaymentFlow({
     if (open && phase === 'idle') {
       const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
       setOrderId(id)
-      localStorage.setItem(`pay-order-${id}`, JSON.stringify({
-        total,
-        items: items.map((i) => ({ name: i.product.name, qty: i.qty, price: i.product.price })),
-      }))
       setPhase('qr')
     }
     if (!open) {
-      if (orderId) {
-        localStorage.removeItem(`pay-order-${orderId}`)
-        localStorage.removeItem(`pay-done-${orderId}`)
-      }
       setPhase('idle')
       setOrderId('')
     }
-  }, [open, phase, total, items, orderId])
+  }, [open, phase])
 
   useEffect(() => {
     if (phase !== 'qr' || !orderId) return
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === `pay-done-${orderId}` && e.newValue === 'true') {
-        setPhase('processing')
-        setTimeout(() => setPhase('success'), 1500)
-      }
+    const topic = `vncom-pay-${orderId}`
+    const sse = new EventSource(`https://ntfy.sh/${topic}/sse`)
+    sse.onmessage = (e) => {
+      try {
+        const data = JSON.parse(e.data)
+        if (data.message === 'paid') {
+          setPhase('processing')
+          setTimeout(() => setPhase('success'), 1500)
+        }
+      } catch {}
     }
-    window.addEventListener('storage', onStorage)
-    return () => window.removeEventListener('storage', onStorage)
+    return () => sse.close()
   }, [phase, orderId])
 
-  const payUrl = orderId ? `${window.location.origin}/pay/${orderId}` : ''
+  const orderData = btoa(JSON.stringify({
+    id: orderId,
+    total,
+    items: items.map((i) => ({ name: i.product.name, qty: i.qty, price: i.product.price })),
+  }))
+  const payUrl = orderId ? `${window.location.origin}/pay/${orderId}?d=${encodeURIComponent(orderData)}` : ''
 
   const [overlayVisible, setOverlayVisible] = useState(false)
   useEffect(() => {

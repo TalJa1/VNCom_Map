@@ -119,3 +119,40 @@
   color: #6b7280;
   font-size: 1rem;
 }
+
+.paypage__amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #b45309;
+  margin: 8px 0 0;
+}
+
+.paypage__btn:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.paypage__btn-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.paypage__spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: paySpinner 0.7s linear infinite;
+}
+
+@keyframes paySpinner {
+  to { transform: rotate(360deg); }
+}
+
+.paypage__lock {
+  font-size: 0.85rem;
+}

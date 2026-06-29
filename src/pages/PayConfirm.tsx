@@ -1,18 +1,38 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useMemo } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { formatVND } from '../data/products'
 import './PayConfirm.css'
 
+interface OrderData {
+  id: string
+  total: number
+  items: { name: string; qty: number; price: number }[]
+}
+
 export default function PayConfirm() {
   const { orderId } = useParams<{ orderId: string }>()
-  const [paid, setPaid] = useState(false)
+  const [searchParams] = useSearchParams()
+  const [phase, setPhase] = useState<'ready' | 'paying' | 'done'>('ready')
 
-  const raw = localStorage.getItem(`pay-order-${orderId}`)
-  const order = raw ? JSON.parse(raw) as { total: number; items: { name: string; qty: number; price: number }[] } : null
+  const order = useMemo<OrderData | null>(() => {
+    try {
+      const d = searchParams.get('d')
+      if (!d) return null
+      return JSON.parse(atob(d))
+    } catch {
+      return null
+    }
+  }, [searchParams])
 
-  const handlePay = () => {
-    setPaid(true)
-    localStorage.setItem(`pay-done-${orderId}`, 'true')
+  const handlePay = async () => {
+    setPhase('paying')
+    try {
+      await fetch(`https://ntfy.sh/vncom-pay-${orderId}`, {
+        method: 'POST',
+        body: 'paid',
+      })
+    } catch {}
+    setTimeout(() => setPhase('done'), 1200)
   }
 
   if (!order) {
@@ -25,7 +45,7 @@ export default function PayConfirm() {
     )
   }
 
-  if (paid) {
+  if (phase === 'done') {
     return (
       <div className="paypage">
         <div className="paypage__card">
@@ -36,6 +56,7 @@ export default function PayConfirm() {
             </svg>
           </div>
           <h2 className="paypage__title paypage__title--success">Thanh toán thành công!</h2>
+          <p className="paypage__amount">{formatVND(order.total)}</p>
           <p className="paypage__subtitle">Bạn có thể đóng trang này.</p>
         </div>
       </div>
@@ -74,11 +95,20 @@ export default function PayConfirm() {
           </div>
         </div>
 
-        <button className="paypage__btn" onClick={handlePay}>
-          Thanh toán {formatVND(order.total)}
+        <button className="paypage__btn" onClick={handlePay} disabled={phase === 'paying'}>
+          {phase === 'paying' ? (
+            <span className="paypage__btn-loading">
+              <span className="paypage__spinner" />
+              Đang xử lý...
+            </span>
+          ) : (
+            `Thanh toán ${formatVND(order.total)}`
+          )}
         </button>
 
-        <p className="paypage__footer">Giao dịch được bảo mật bởi VietQR</p>
+        <p className="paypage__footer">
+          <span className="paypage__lock">🔒</span> Giao dịch được bảo mật bởi VietQR
+        </p>
       </div>
     </div>
   )
