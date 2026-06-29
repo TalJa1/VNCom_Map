@@ -18,7 +18,7 @@ export default function PayConfirm() {
     try {
       const d = searchParams.get('d')
       if (!d) return null
-      return JSON.parse(atob(d))
+      return JSON.parse(decodeURIComponent(escape(atob(d))))
     } catch {
       return null
     }

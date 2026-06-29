@@ -102,11 +102,11 @@ function PaymentFlow({
     return () => sse.close()
   }, [phase, orderId])
 
-  const orderData = btoa(JSON.stringify({
+  const orderData = btoa(unescape(encodeURIComponent(JSON.stringify({
     id: orderId,
     total,
     items: items.map((i) => ({ name: i.product.name, qty: i.qty, price: i.product.price })),
-  }))
+  }))))
   const payUrl = orderId ? `${window.location.origin}/pay/${orderId}?d=${encodeURIComponent(orderData)}` : ''
 
   const [overlayVisible, setOverlayVisible] = useState(false)
