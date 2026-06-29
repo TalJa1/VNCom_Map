@@ -1,6 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/pay/:path*", "destination": "/index.html" },
-    { "source": "/farmer/:path*", "destination": "/index.html" }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
